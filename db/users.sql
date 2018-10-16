@@ -6,8 +6,8 @@ CREATE DATABASE colombiafest_users;
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name VARCHAR NOT NULL,
-    lastname VARCHAR UNIQUE NOT NULL,
-    email VARCHAR NOT NULL,
+    lastname VARCHAR NOT NULL,
+    email VARCHAR UNIQUE NOT NULL,
     phone VARCHAR NOT NULL,
     registered_at VARCHAR
 );
