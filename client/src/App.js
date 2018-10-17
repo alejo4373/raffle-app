@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Container, Form, FormGroup } from 'semantic-ui-react';
+import ReactPhoneInput from 'react-phone-input-2';
 
 class App extends Component {
   state = {
@@ -17,7 +18,14 @@ class App extends Component {
     })
   }
 
+  handlePhoneInput = (val) => {
+    this.setState({
+      phone: val
+    })
+  }
+
   render() {
+    const { name, lastname, phone, email } = this.state;
     return (
       <div className="App">
         <Container className='header'>
@@ -28,17 +36,19 @@ class App extends Component {
             <FormGroup widths='equal'>
               <Form.Input
                 fluid
-                label='First Name:'
+                label='First Name'
                 type='text'
                 name='name'
+                value={name}
                 placeholder='First Name'
                 onChange={this.handleInputChange}
               />
               <Form.Input
                 fluid
-                label='Last Name:'
+                label='Last Name'
                 type='text'
                 name='lastname'
+                value={lastname}
                 placeholder='Last Name'
                 onChange={this.handleInputChange}
               />
@@ -47,16 +57,24 @@ class App extends Component {
               label='Email'
               type='email'
               name='email'
+              value={email}
               placeholder='jhondoe@example.com'
               onChange={this.handleInputChange}
             />
-            <Form.Input
-              label='Phone'
-              placeholder='Phone'
-              type='text'
-              name='phone'
-              onChange={this.handleInputChange}
-            />
+            <Form.Field>
+              <label>Phone</label>
+              <ReactPhoneInput
+                defaultCountry='us'
+                regions={['america']}
+                placeholder='Phone'
+                value={phone}
+                inputStyle={{
+                  'padding-left': '3em'
+                }}
+                onChange={this.handlePhoneInput}
+              />
+            </Form.Field>
+            <Form.Button content='Submit'/>
           </Form>
         </Container>
       </div >
