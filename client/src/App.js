@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Container, Form, FormGroup } from 'semantic-ui-react';
+import { Container, Form, FormGroup, Message } from 'semantic-ui-react';
 import ReactPhoneInput from 'react-phone-input-2';
 
 import './App.css';
@@ -10,17 +10,36 @@ class App extends Component {
     name: '',
     lastname: '',
     phone: '',
-    email: ''
+    email: '',
+    msg: {},
+    formLoading: false
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
+    this.setState({
+      formLoading: true
+    })
     axios.post('/register', this.state)
-      .then(res => {
-        console.log('axios res', res)
+      .then(({ data }) => {
+        if (data.success) {
+          this.setState({
+            name: '',
+            lastname: '',
+            phone: '',
+            email: '',
+            msg: data,
+            formLoading: false
+          })
+        } else {
+          this.setState({
+            msg: data,
+            formLoading: false
+          })
+        }
       })
       .catch(err => {
-        console.log('axios err', err)
+        console.log('Network error:', err)
       })
   }
 
@@ -37,14 +56,19 @@ class App extends Component {
   }
 
   render() {
-    const { name, lastname, phone, email } = this.state;
+    const { name, lastname, phone, email, msg, formLoading } = this.state;
     return (
       <div className="App">
         <Container className='header'>
           <img src='http://www.digital.nyc/sites/all/themes/custom/ecohub_foundation_dnyc/images/nyc_bg.jpg' alt='nyc skyline' />
         </Container>
         <Container>
-          <Form onSubmit={this.handleSubmit}>
+          <Form
+            loading={formLoading}
+            success={msg.success}
+            error={!msg.success}
+            onSubmit={this.handleSubmit}
+          >
             <FormGroup widths='equal'>
               <Form.Input
                 fluid
@@ -86,6 +110,11 @@ class App extends Component {
                 onChange={this.handlePhoneInput}
               />
             </Form.Field>
+            <Message
+              success={msg.success}
+              error={!msg.success}
+              header={msg.title}
+              content={msg.content} />
             <Form.Button content='Submit' />
           </Form>
         </Container>

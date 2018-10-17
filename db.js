@@ -22,10 +22,20 @@ const putUser = async (user) => {
         VALUES($/name/, $/lastname/, $/email/, $/phone/, $/registered_at/);`,
       newUser
     )
-    return { message: 'SUCCESS' };
+    return {
+      type: 'SUCCESS',
+      success: true,
+      title: 'Successful registration!',
+      content: "You're all signed up for the raffle"
+    };
   } catch (err) {
     if (err.routine === '_bt_check_unique') {
-      return { message: 'ALREADY_EXISTS' };
+      return {
+        type: 'FORBIDDEN',
+        success: false,
+        title: 'Form Error',
+        content: "You can only sign up for an account once with a given e-mail address."
+      };
     }
     return Promise.reject(err)
   }
