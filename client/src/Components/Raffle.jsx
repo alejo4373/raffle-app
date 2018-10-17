@@ -26,14 +26,16 @@ class Raffle extends Component {
 
     axios.post('/raffle', { secret })
       .then(({ data }) => {
-        if (!data.success) {
+        if (data.type === 'FORBIDDEN') {
           this.setState({
             msg: data,
-            buttonLoading: false
+            buttonLoading: false,
+            secret: ''
           })
         } else {
           this.setState({
             winner: data,
+            buttonLoading: false
           })
         }
       })
