@@ -1,13 +1,12 @@
 const pgp = require('pg-promise')();
 const db = pgp('postgres://localhost:5432/colombiafest_users')
-const utils = require('./utils');
 
 const getAllUsers = async () => {
   let users;
   try {
     users = await db.any('SELECT * from users')
   } catch (err) {
-    return utils.handleErr(err);
+    return Promise.reject(err)
   }
   return users;
 }
@@ -28,7 +27,7 @@ const putUser = async (user) => {
     if (err.routine === '_bt_check_unique') {
       return 'ALREADY_EXISTS';
     }
-    return utils.handleErr(err);
+    return Promise.reject(err)
   }
 }
 
@@ -36,8 +35,6 @@ module.exports = {
   getAllUsers,
   putUser,
 }
-
-
 
 const main = async () => {
   let res = await putUser({
@@ -48,5 +45,3 @@ const main = async () => {
   })
   console.log(res);
 }
-
-main();
