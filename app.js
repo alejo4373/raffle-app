@@ -3,9 +3,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-let register = require('./routes/register');
-
 var app = express();
+const db = require('./db');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -13,7 +12,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/register', register);
+app.get('/users', async (req, res, next) => {
+  let users;
+  try {
+    users = await db.getAllUsers();
+    res.json(users);
+  } catch (err) {
+    next(err);
+  }
+})
 
 // error handler
 app.use(function (err, req, res, next) {
