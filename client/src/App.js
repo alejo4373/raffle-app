@@ -99,7 +99,7 @@ class App extends Component {
         <Container className='header'>
           <img src='http://www.digital.nyc/sites/all/themes/custom/ecohub_foundation_dnyc/images/nyc_bg.jpg' alt='nyc skyline' />
         </Container>
-        <Container>
+        <div className='form-container'>
           <Form
             loading={formLoading}
             success={msg.success}
@@ -162,7 +162,7 @@ class App extends Component {
               <Button content='Reset' onClick={this.resetForm} secondary />
             </Button.Group>
           </Form>
-        </Container>
+        </div>
       </div >
     );
   }
