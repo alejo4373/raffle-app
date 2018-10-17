@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
+
 import axios from 'axios';
 import { Header, Form, FormGroup, Message, Button } from 'semantic-ui-react';
 import ReactPhoneInput from 'react-phone-input-2';
@@ -99,7 +101,7 @@ class App extends Component {
         <div>
           <img src='/banner.png' alt='nyc skyline' className='banner' />
         </div>
-        <Header as='h1'>ColombiaFest 2018</Header>
+        <Header as='h1'>Delicias y Punto - ColombiaFest 2018 </Header>
         <div className='form-container'>
           <Form
             loading={formLoading}
