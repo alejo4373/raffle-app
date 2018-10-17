@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Container, Form, FormGroup, Message } from 'semantic-ui-react';
+import { Container, Form, FormGroup, Message, Button } from 'semantic-ui-react';
 import ReactPhoneInput from 'react-phone-input-2';
 
 import './App.css';
@@ -20,7 +20,18 @@ class App extends Component {
       this.setState({
         msg: {}
       })
-    }, 5000)
+    }, 10000)
+  }
+
+  resetForm = (e) => {
+    e.preventDefault();
+    this.setState({
+      name: '',
+      lastname: '',
+      phone: '',
+      email: '',
+      msg: {},
+    })
   }
 
   registerUser = (user) => {
@@ -45,6 +56,14 @@ class App extends Component {
         this.timeOutMessage();
       })
       .catch(err => {
+        this.setState({
+          msg: {
+             success: false,
+             title: "Network Error",
+             content: "There was a problem with the network connection. We apologize for the inconvenience."
+           },
+           formLoading: false
+        })
         console.log('Network error:', err)
       })
   }
@@ -135,8 +154,13 @@ class App extends Component {
               success={msg.success}
               error={!msg.success}
               header={msg.title}
-              content={msg.content} />
-            <Form.Button content='Submit' />
+              content={msg.content}
+            />
+            <br />
+            <Button.Group fluid>
+              <Button content='Submit' primary />
+              <Button content='Reset' onClick={this.resetForm} secondary />
+            </Button.Group>
           </Form>
         </Container>
       </div >

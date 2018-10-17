@@ -2,16 +2,6 @@ body {
   margin: 0;
 }
 
-.App {
-  text-align: center;
+.ui.buttons {
+  padding: 0 calc(50% - 121px);
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.header {
-  width: inherit;
-}
-
