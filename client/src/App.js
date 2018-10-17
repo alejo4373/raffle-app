@@ -6,8 +6,7 @@ import './App.css';
 import BannerAndHeader from './Components/BannerAndHeader';
 import FormComponent from './Components/Form';
 import Participants from './Components/Participants';
-
-const Raffle = () => <div>Raffle</div>
+import Raffle from './Components/Raffle';
 
 class App extends Component {
   render() {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Card, Image, Header, Icon } from 'semantic-ui-react';
+import { Card, Image, Header, Input, Button, List } from 'semantic-ui-react';
 
 class Raffle extends Component {
   state = {
@@ -8,7 +8,7 @@ class Raffle extends Component {
   }
 
   fetchRaffleWinner = () => {
-    axios.get('/users/winner')
+    axios.get('/raffle')
       .then(({ data }) => {
         this.setState({
           winner: data,
@@ -23,7 +23,7 @@ class Raffle extends Component {
     axios.get('/users/total')
       .then(({ data }) => {
         this.setState({
-          numberOfParticipants: data,
+          numberOfParticipants: data.count,
         })
       })
       .catch(err => {
@@ -40,20 +40,30 @@ class Raffle extends Component {
     return (
       <div>
         <Header as='h2'>Raffle: </Header>
-        <Card>
-          <Image src='/avatar.svg' />
-          <Card.Content>
-            <Card.Header>{winner.name + ' ' + winner.lastname}</Card.Header>
-            <Card.Meta>
-              <span className='date'>{`Registered in ${winner.registered_at}`}</span>
-            </Card.Meta>
-          </Card.Content>
-          <Card.Content extra>
-            <Icon name='hashtag'>{winner.id}</Icon>
-            <Icon name='mail'>{winner.email}</Icon>
-            <Icon name='phone'>{winner.phone}</Icon>
-          </Card.Content>
-        </Card>
+        <div className='card-container'>
+          <Card fluid>
+            <Image src='/avatar.svg' />
+            <Card.Content>
+              <Card.Header>{winner.name + ' ' + winner.lastname}</Card.Header>
+              <Card.Meta>
+                <span className='date'>{`Registered in ${winner.registered_at}`}</span>
+              </Card.Meta>
+            </Card.Content>
+            <Card.Content extra>
+              <List>
+                <List.Item icon='hashtag' content={winner.id} />
+                <List.Item icon='mail' content={winner.email} />
+                <List.Item icon='phone' content={winner.phone} />
+              </List>
+            </Card.Content>
+          </Card>
+          <Button
+            fluid
+            positive
+            content='Pick a Winner'
+            onClick={this.fetchRaffleWinner}
+          />
+        </div>
       </div>
     )
   }

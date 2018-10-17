@@ -6,11 +6,23 @@ body {
   padding: 0 15%;
 }
 
-@media (max-width: 376px) {
+@media (max-width: 416px) {
   .App {
     padding: 0 10%;
   }
+
+  .card-container {
+      margin: 0;
+      width: 100%;
+    }
 } 
+
+@media (min-width: 415px) {
+ .card-container {
+    margin: 0 auto;
+    width: 60%;
+  } 
+}
 
 .ui.buttons {
   padding: 0 calc(50% - 121px);
@@ -24,3 +36,4 @@ body {
   width: 5em;
   padding: 1em 0;
 }
+
