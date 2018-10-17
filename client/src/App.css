@@ -15,3 +15,7 @@ body {
 .ui.buttons {
   padding: 0 calc(50% - 121px);
 }
+
+img {
+  width: 100%;
+}

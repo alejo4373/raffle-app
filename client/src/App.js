@@ -58,11 +58,11 @@ class App extends Component {
       .catch(err => {
         this.setState({
           msg: {
-             success: false,
-             title: "Network Error",
-             content: "There was a problem with the network connection. We apologize for the inconvenience."
-           },
-           formLoading: false
+            success: false,
+            title: "Network Error",
+            content: "There was a problem with the network connection. We apologize for the inconvenience."
+          },
+          formLoading: false
         })
         console.log('Network error:', err)
       })
@@ -96,9 +96,9 @@ class App extends Component {
     const { name, lastname, phone, email, msg, formLoading } = this.state;
     return (
       <div className="App">
-        <Container className='header'>
-          <img src='http://www.digital.nyc/sites/all/themes/custom/ecohub_foundation_dnyc/images/nyc_bg.jpg' alt='nyc skyline' />
-        </Container>
+        <div>
+          <img src='/banner.png' alt='nyc skyline' className='banner' />
+        </div>
         <div className='form-container'>
           <Form
             loading={formLoading}
