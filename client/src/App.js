@@ -15,24 +15,34 @@ class App extends Component {
     formLoading: false
   }
 
+  timeOutMessage = () => {
+    setTimeout(() => {
+      this.setState({
+        msg: {}
+      })
+    }, 5000)
+  }
+
   registerUser = (user) => {
     axios.post('/register', user)
       .then(({ data }) => {
+        let newState = {
+          msg: data,
+          formLoading: false
+        };
+
         if (data.success) {
-          this.setState({
+          newState = {
             name: '',
             lastname: '',
             phone: '',
             email: '',
-            msg: data,
-            formLoading: false
-          })
-        } else {
-          this.setState({
-            msg: data,
-            formLoading: false
-          })
+            ...newState
+          }
         }
+
+        this.setState(newState)
+        this.timeOutMessage();
       })
       .catch(err => {
         console.log('Network error:', err)
@@ -83,6 +93,7 @@ class App extends Component {
                 label='First Name'
                 type='text'
                 name='name'
+                required={true}
                 value={name}
                 placeholder='First Name'
                 onChange={this.handleInputChange}
@@ -91,6 +102,7 @@ class App extends Component {
                 fluid
                 label='Last Name'
                 type='text'
+                required={true}
                 name='lastname'
                 value={lastname}
                 placeholder='Last Name'
@@ -101,6 +113,7 @@ class App extends Component {
               label='Email'
               type='email'
               name='email'
+              required={true}
               value={email}
               placeholder='jhondoe@example.com'
               onChange={this.handleInputChange}
