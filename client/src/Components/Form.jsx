@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Header, Form, FormGroup, Message, Button } from 'semantic-ui-react';
+import { Form, FormGroup, Message, Button } from 'semantic-ui-react';
 import ReactPhoneInput from 'react-phone-input-2';
 
 class FormComponent extends Component {
@@ -93,11 +93,6 @@ class FormComponent extends Component {
   render() {
     const { name, lastname, phone, email, msg, formLoading } = this.state;
     return (
-      <div className="App">
-        <div>
-          <img src='/banner.png' alt='nyc skyline' className='banner' />
-        </div>
-        <Header as='h1'>Delicias y Punto - ColombiaFest 2018 </Header>
         <div className='form-container'>
           <Form
             loading={formLoading}
@@ -162,7 +157,6 @@ class FormComponent extends Component {
             </Button.Group>
           </Form>
         </div>
-      </div >
     );
   }
 }
