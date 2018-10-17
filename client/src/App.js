@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
-import './App.css';
+import axios from 'axios';
 import { Container, Form, FormGroup } from 'semantic-ui-react';
 import ReactPhoneInput from 'react-phone-input-2';
 
+import './App.css';
+
 class App extends Component {
   state = {
-
+    name: '',
+    lastname: '',
+    phone: '',
+    email: ''
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
+    axios.post('/register', this.state)
+      .then(res => {
+        console.log('axios res', res)
+      })
+      .catch(err => {
+        console.log('axios err', err)
+      })
   }
 
   handleInputChange = (e) => {
@@ -69,12 +81,12 @@ class App extends Component {
                 placeholder='Phone'
                 value={phone}
                 inputStyle={{
-                  'padding-left': '3em'
+                  paddingLeft: '3em'
                 }}
                 onChange={this.handlePhoneInput}
               />
             </Form.Field>
-            <Form.Button content='Submit'/>
+            <Form.Button content='Submit' />
           </Form>
         </Container>
       </div >
