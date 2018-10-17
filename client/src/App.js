@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Container, Form, FormGroup, Message, Button } from 'semantic-ui-react';
+import { Header, Form, FormGroup, Message, Button } from 'semantic-ui-react';
 import ReactPhoneInput from 'react-phone-input-2';
 
 import './App.css';
@@ -99,6 +99,7 @@ class App extends Component {
         <div>
           <img src='/banner.png' alt='nyc skyline' className='banner' />
         </div>
+        <Header as='h1'>ColombiaFest 2018</Header>
         <div className='form-container'>
           <Form
             loading={formLoading}
