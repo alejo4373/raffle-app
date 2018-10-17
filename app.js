@@ -22,6 +22,17 @@ app.get('/users', async (req, res, next) => {
   }
 })
 
+app.post('/register', async (req, res, next) => {
+  const user = req.body;
+  console.log(user);
+  try {
+    msg = await db.putUser(user);
+    res.json(msg);
+  } catch (err) {
+    next(err);
+  }
+})
+
 // error handler
 app.use(function (err, req, res, next) {
   if (req.app.get('env') === 'development') {

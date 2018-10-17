@@ -22,10 +22,10 @@ const putUser = async (user) => {
         VALUES($/name/, $/lastname/, $/email/, $/phone/, $/registered_at/);`,
       newUser
     )
-    return 'SUCCESS';
+    return { message: 'SUCCESS' };
   } catch (err) {
     if (err.routine === '_bt_check_unique') {
-      return 'ALREADY_EXISTS';
+      return { message: 'ALREADY_EXISTS' };
     }
     return Promise.reject(err)
   }
@@ -34,14 +34,4 @@ const putUser = async (user) => {
 module.exports = {
   getAllUsers,
   putUser,
-}
-
-const main = async () => {
-  let res = await putUser({
-    name: 'blahblah2',
-    lastname: 'Rodriguez',
-    email: 'kelvinahdrodriakdguez@ac.c4q.nyc',
-    phone: '917-5736025',
-  })
-  console.log(res);
 }
