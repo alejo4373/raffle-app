@@ -5,10 +5,16 @@ import { Card, Image, Header, Input, Button, List } from 'semantic-ui-react';
 class Raffle extends Component {
   state = {
     winner: {},
+    secret: '',
+    buttonLoading: false,
+    buttonDisabled: true
   }
 
   fetchRaffleWinner = () => {
-    axios.get('/raffle')
+    const { secret } = this.state
+    this.setState({ buttonLoading: true })
+
+    axios.post('/raffle', { secret })
       .then(({ data }) => {
         this.setState({
           winner: data,
@@ -35,8 +41,21 @@ class Raffle extends Component {
     this.fetchNumberOfParticipants();
   }
 
+  handleInput = (e, { value }) => {
+    let buttonDisabled = false;
+
+    if (value === '') {
+      buttonDisabled = true
+    }
+
+    this.setState({
+      secret: value,
+      buttonDisabled
+    })
+  }
+
   render() {
-    const { winner } = this.state;
+    const { winner, buttonLoading, buttonDisabled, secret } = this.state;
     return (
       <div>
         <Header as='h2'>Raffle: </Header>
@@ -57,9 +76,20 @@ class Raffle extends Component {
               </List>
             </Card.Content>
           </Card>
+          <Input
+            fluid
+            icon='key'
+            iconPosition='left'
+            placeholder='Secret word'
+            onChange={this.handleInput}
+            value={secret}
+          />
+          <br />
           <Button
             fluid
             positive
+            disabled={buttonDisabled}
+            loading={buttonLoading}
             content='Pick a Winner'
             onClick={this.fetchRaffleWinner}
           />
