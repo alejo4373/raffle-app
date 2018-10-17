@@ -11,14 +11,14 @@ body {
     padding: 0 10%;
   }
 
-  .card-container {
+  .raffle-container {
       margin: 0;
       width: 100%;
     }
 } 
 
 @media (min-width: 415px) {
- .card-container {
+ .raffle-container {
     margin: 0 auto;
     width: 60%;
   } 

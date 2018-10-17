@@ -54,28 +54,39 @@ class Raffle extends Component {
     })
   }
 
+  renderCard = () => {
+    const { winner } = this.state;
+    if (winner.id) {
+      return (
+        <Card fluid>
+          <Image src='https://media2.giphy.com/media/ehhuGD0nByYxO/giphy.gif?cid=3640f6095bc7959a774435562eb3e276' />
+          <Card.Content>
+            <Card.Header>{winner.name + ' ' + winner.lastname}</Card.Header>
+            <Card.Meta>
+              <span className='date'>{`Registered in ${winner.registered_at}`}</span>
+            </Card.Meta>
+          </Card.Content>
+          <Card.Content extra>
+            <List>
+              <List.Item icon='hashtag' content={winner.id} />
+              <List.Item icon='mail' content={winner.email} />
+              <List.Item icon='phone' content={winner.phone} />
+            </List>
+          </Card.Content>
+        </Card>
+      )
+    } else {
+      return null
+    }
+  }
+
   render() {
     const { winner, buttonLoading, buttonDisabled, secret } = this.state;
     return (
       <div>
         <Header as='h2'>Raffle: </Header>
-        <div className='card-container'>
-          <Card fluid>
-            <Image src='/avatar.svg' />
-            <Card.Content>
-              <Card.Header>{winner.name + ' ' + winner.lastname}</Card.Header>
-              <Card.Meta>
-                <span className='date'>{`Registered in ${winner.registered_at}`}</span>
-              </Card.Meta>
-            </Card.Content>
-            <Card.Content extra>
-              <List>
-                <List.Item icon='hashtag' content={winner.id} />
-                <List.Item icon='mail' content={winner.email} />
-                <List.Item icon='phone' content={winner.phone} />
-              </List>
-            </Card.Content>
-          </Card>
+        <div className='raffle-container'>
+          {this.renderCard()}
           <Input
             fluid
             icon='key'
