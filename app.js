@@ -23,6 +23,15 @@ app.get('/users', async (req, res, next) => {
   }
 })
 
+app.get('/users/total', async (req, res, next) => {
+  try {
+    const data = await db.getNumberOfUsers();
+    res.json(data);
+  } catch (err) {
+    next(err);
+  }
+})
+
 app.post('/register', async (req, res, next) => {
   const user = req.body;
   try {

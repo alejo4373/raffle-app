@@ -41,7 +41,17 @@ const putUser = async (user) => {
   }
 }
 
+const getNumberOfUsers = async () => {
+  try {
+    const data = await db.one('SELECT COUNT(id) from users')
+    return data;
+  } catch (err) {
+    return Promise.reject(err)
+  }
+}
+
 module.exports = {
   getAllUsers,
   putUser,
+  getNumberOfUsers
 }
