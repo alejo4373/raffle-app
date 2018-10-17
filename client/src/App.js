@@ -5,8 +5,8 @@ import './App.css';
 // Child Components
 import BannerAndHeader from './Components/BannerAndHeader';
 import FormComponent from './Components/Form';
+import Participants from './Components/Participants';
 
-const ParticipantsList = () => <div>Participants</div>
 const Raffle = () => <div>Raffle</div>
 
 class App extends Component {
@@ -15,7 +15,7 @@ class App extends Component {
       <div className='App'>
         <BannerAndHeader/>
         <Switch>
-          <Route path='/participants' component={ParticipantsList} />
+          <Route path='/participants' component={Participants} />
           <Route path='/raffle' component={Raffle} />
           <Route path='/' component={FormComponent} />
         </Switch>

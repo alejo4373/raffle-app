@@ -19,3 +19,7 @@ body {
 img {
   width: 100%;
 }
+
+.user-avatar {
+  width: 5em;
+}

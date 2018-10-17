@@ -8,6 +8,7 @@ const BannerAndHeader = () => {
         <img src='/banner.png' alt='nyc skyline' className='banner' />
       </div>
       <Header as='h1'>Delicias y Punto - ColombiaFest 2018 </Header>
+      <br/>
     </div>
   )
 }
