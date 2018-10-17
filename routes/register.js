@@ -7,10 +7,10 @@ router.get('/users', async (req, res, next) => {
   let users;
   try {
     users = await db.getAllUsers();
+    res.json(users);
   } catch (err) {
     next(err);
   }
-  res.json(users);
 })
 
 module.exports = router;

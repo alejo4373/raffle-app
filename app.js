@@ -1,4 +1,3 @@
-var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -20,10 +19,10 @@ app.use('/register', register);
 app.use(function (err, req, res, next) {
   if (req.app.get('env') === 'development') {
     console.log('[Error]:\n', err);
-  } else {
-    res.status(500);
-    res.send('Error')
   }
+  res.status(500);
+  res.send('Error')
+
 });
 
 module.exports = app;
