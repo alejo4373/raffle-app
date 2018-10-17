@@ -15,12 +15,8 @@ class App extends Component {
     formLoading: false
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.setState({
-      formLoading: true
-    })
-    axios.post('/register', this.state)
+  registerUser = (user) => {
+    axios.post('/register', user)
       .then(({ data }) => {
         if (data.success) {
           this.setState({
@@ -41,6 +37,18 @@ class App extends Component {
       .catch(err => {
         console.log('Network error:', err)
       })
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.setState({
+      formLoading: true
+    })
+
+    // Delay for a better UX
+    setTimeout(() => {
+      this.registerUser(this.state)
+    }, 1000)
   }
 
   handleInputChange = (e) => {
