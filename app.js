@@ -42,18 +42,28 @@ app.post('/register', async (req, res, next) => {
   }
 })
 
-app.get('/raffle', (req, res, next) => {
-  // Wait 3 seconds to build expectation
-  setTimeout(async () => {
-    try {
-      let users = await db.getAllUsers();
-      let i = Math.floor(Math.random() * users.length)
-      let winner = users[i];
-      res.json(winner);
-    } catch (err) {
-      next(err);
-    }
-  }, 3000)
+app.post('/raffle', (req, res, next) => {
+  let { secret } = req.body
+  if (secret === 'ColombiaFest 2018') {
+    // Wait 3 seconds to build expectation
+    setTimeout(async () => {
+      try {
+        let users = await db.getAllUsers();
+        let i = Math.floor(Math.random() * users.length)
+        let winner = users[i];
+        res.json(winner);
+      } catch (err) {
+        next(err);
+      }
+    }, 3000)
+  } else {
+    res.json({
+      type: 'FORBIDDEN',
+      success: false,
+      title: 'Form Error',
+      content: "You used an incorrect secret word."
+    });
+  }
 
 })
 
