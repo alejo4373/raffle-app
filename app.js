@@ -24,10 +24,21 @@ app.get('/users', async (req, res, next) => {
 
 app.post('/register', async (req, res, next) => {
   const user = req.body;
-  console.log(user);
   try {
     msg = await db.putUser(user);
     res.json(msg);
+  } catch (err) {
+    next(err);
+  }
+})
+
+app.get('/raffle', async (req, res, next) => {
+  let winner;
+  try {
+    let users = await db.getAllUsers();
+    let i = Math.floor(Math.random() * users.length)
+    winner = users[i]
+    res.json(winner);
   } catch (err) {
     next(err);
   }
