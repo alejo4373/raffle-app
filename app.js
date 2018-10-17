@@ -42,16 +42,19 @@ app.post('/register', async (req, res, next) => {
   }
 })
 
-app.get('/raffle', async (req, res, next) => {
-  let winner;
-  try {
-    let users = await db.getAllUsers();
-    let i = Math.floor(Math.random() * users.length)
-    winner = users[i]
-    res.json(winner);
-  } catch (err) {
-    next(err);
-  }
+app.get('/raffle', (req, res, next) => {
+  // Wait 3 seconds to build expectation
+  setTimeout(async () => {
+    try {
+      let users = await db.getAllUsers();
+      let i = Math.floor(Math.random() * users.length)
+      let winner = users[i];
+      res.json(winner);
+    } catch (err) {
+      next(err);
+    }
+  }, 3000)
+
 })
 
 // Error handler
