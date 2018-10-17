@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Card, Image, Header, Input, Button, List } from 'semantic-ui-react';
+import {
+  Card,
+  Image,
+  Header,
+  Input,
+  Button,
+  List,
+  Form,
+  Message
+} from 'semantic-ui-react';
 
 class Raffle extends Component {
   state = {
     winner: {},
     secret: '',
     buttonLoading: false,
-    buttonDisabled: true
+    buttonDisabled: true,
+    msg: {}
   }
 
   fetchRaffleWinner = () => {
@@ -16,9 +26,16 @@ class Raffle extends Component {
 
     axios.post('/raffle', { secret })
       .then(({ data }) => {
-        this.setState({
-          winner: data,
-        })
+        if (!data.success) {
+          this.setState({
+            msg: data,
+            buttonLoading: false
+          })
+        } else {
+          this.setState({
+            winner: data,
+          })
+        }
       })
       .catch(err => {
         console.log('Error picking winner', err);
@@ -81,29 +98,35 @@ class Raffle extends Component {
   }
 
   render() {
-    const { winner, buttonLoading, buttonDisabled, secret } = this.state;
+    const { buttonLoading, buttonDisabled, secret, msg } = this.state;
     return (
       <div>
         <Header as='h2'>Raffle: </Header>
         <div className='raffle-container'>
           {this.renderCard()}
-          <Input
-            fluid
-            icon='key'
-            iconPosition='left'
-            placeholder='Secret word'
-            onChange={this.handleInput}
-            value={secret}
-          />
-          <br />
-          <Button
-            fluid
-            positive
-            disabled={buttonDisabled}
-            loading={buttonLoading}
-            content='Pick a Winner'
-            onClick={this.fetchRaffleWinner}
-          />
+          <Form onSubmit={this.fetchRaffleWinner} error={!msg.success}>
+            <Input
+              fluid
+              icon='key'
+              iconPosition='left'
+              placeholder='Secret word'
+              onChange={this.handleInput}
+              value={secret}
+            />
+            <br />
+            <Button
+              fluid
+              positive
+              disabled={buttonDisabled}
+              loading={buttonLoading}
+              content='Pick a Winner'
+            />
+            <Message
+              error={!msg.success}
+              header={msg.title}
+              content={msg.content}
+            />
+          </Form >
         </div>
       </div>
     )
