@@ -1,26 +1,18 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {
-  Card,
-  Image,
-  Header,
-  Input,
-  Button,
-  List,
-  Form,
-  Message
-} from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
+
+import RaffleForm from './RaffleForm';
+import RaffleWinner from './RaffleWinner';
 
 class Raffle extends Component {
   state = {
-    winner: {},
+    winner: null,
     secret: '',
-    buttonLoading: false,
-    buttonDisabled: true,
     msg: {}
   }
 
-  fetchRaffleWinner = () => {
+  selectRaffleWinner = () => {
     const { secret } = this.state
     this.setState({ buttonLoading: true })
 
@@ -35,7 +27,8 @@ class Raffle extends Component {
         } else {
           this.setState({
             winner: data,
-            buttonLoading: false
+            buttonLoading: false,
+            msg: {}
           })
         }
       })
@@ -56,79 +49,55 @@ class Raffle extends Component {
       })
   }
 
+  fetchWinner = () => {
+    axios.get('/raffle/winner')
+      .then(({ data }) => {
+        this.setState({
+          winner: data,
+        })
+      })
+      .catch(err => {
+        console.log('Error fetching winner', err);
+      })
+  }
+
   componentDidMount = () => {
     this.fetchNumberOfParticipants();
   }
 
-  handleInput = (e, { value }) => {
-    let buttonDisabled = false;
-
-    if (value === '') {
-      buttonDisabled = true
-    }
-
+  handleInput = (value) => {
     this.setState({
       secret: value,
-      buttonDisabled
     })
   }
 
-  renderCard = () => {
+  renderRaffleForm = () => {
+    const { secret, msg } = this.state;
+    return (
+      <RaffleForm
+        handleSubmit={this.selectRaffleWinner}
+        handleInput={this.handleInput}
+        secret={secret}
+        msg={msg}
+      />
+    )
+  }
+
+  renderRaffleWinner = () => {
     const { winner } = this.state;
-    if (winner.id) {
-      return (
-        <Card fluid>
-          <Image src='https://media2.giphy.com/media/ehhuGD0nByYxO/giphy.gif?cid=3640f6095bc7959a774435562eb3e276' />
-          <Card.Content>
-            <Card.Header>{winner.name + ' ' + winner.lastname}</Card.Header>
-            <Card.Meta>
-              <span className='date'>{`Registered in ${winner.registered_at}`}</span>
-            </Card.Meta>
-          </Card.Content>
-          <Card.Content extra>
-            <List>
-              <List.Item icon='hashtag' content={winner.id} />
-              <List.Item icon='mail' content={winner.email} />
-              <List.Item icon='phone' content={winner.phone} />
-            </List>
-          </Card.Content>
-        </Card>
-      )
-    } else {
-      return null
-    }
+    return (<RaffleWinner winner={winner} />)
   }
 
   render() {
-    const { buttonLoading, buttonDisabled, secret, msg } = this.state;
+    const { winner } = this.state
     return (
       <div>
         <Header as='h2'>Raffle: </Header>
         <div className='raffle-container'>
-          {this.renderCard()}
-          <Form onSubmit={this.fetchRaffleWinner} error={!msg.success}>
-            <Input
-              fluid
-              icon='key'
-              iconPosition='left'
-              placeholder='Secret word'
-              onChange={this.handleInput}
-              value={secret}
-            />
-            <br />
-            <Button
-              fluid
-              positive
-              disabled={buttonDisabled}
-              loading={buttonLoading}
-              content='Pick a Winner'
-            />
-            <Message
-              error={!msg.success}
-              header={msg.title}
-              content={msg.content}
-            />
-          </Form >
+          {
+            winner ? this.renderRaffleWinner()
+              : this.renderRaffleForm()
+          }
         </div>
       </div>
     )
