@@ -16,10 +16,11 @@ body {
   padding: 0 calc(50% - 121px);
 }
 
-img {
+.banner {
   width: 100%;
 }
 
 .user-avatar {
   width: 5em;
+  padding: 1em 0;
 }
