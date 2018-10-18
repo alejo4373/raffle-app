@@ -1,13 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const BannerAndHeader = () => {
   return (
     <div>
-      <div>
+      <Link to='/'>
         <img src='/banner.png' alt='nyc skyline' className='banner' />
-      </div>
+      </Link>
       <div className='logo-container'>
-        <img src='/MarujitasLogos.png' className='logo' alt='marujitas logo'/>
+        <a href='http://www.deliciasypunto.com'>
+          <img src='/MarujitasLogos.png' className='logo' alt='marujitas logo' />
+        </a>
       </div>
       <br />
     </div>
