@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, List, } from 'semantic-ui-react';
+import { Card, List, Image } from 'semantic-ui-react';
 
 class RaffleWinner extends Component {
   render() {
@@ -9,10 +9,7 @@ class RaffleWinner extends Component {
     const time = dateObj.toLocaleTimeString();
     return (
       <Card fluid>
-        <video src="/congrats.mp4" loop={true} autoPlay={true}>
-          Congrats!!!
-        </video>
-
+        <Image src="/_blah.png" alt='yahoo'/>
         <Card.Content>
           <Card.Header>{winner.name + ' ' + winner.lastname}</Card.Header>
           <Card.Meta>
