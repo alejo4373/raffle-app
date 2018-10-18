@@ -14,7 +14,7 @@ class App extends Component {
     return (
       <div className='App'>
         <Segment>
-          <BannerAndHeader />
+          <BannerAndHeader history={this.props.history} />
           <Switch>
             <Route path='/participants' component={Participants} />
             <Route path='/raffle' component={Raffle} />

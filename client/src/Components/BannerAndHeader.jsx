@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from './NavBar';
 
-const BannerAndHeader = () => {
+const BannerAndHeader = (props) => {
   return (
     <div>
       <Link to='/'>
@@ -12,7 +12,7 @@ const BannerAndHeader = () => {
         <a href='http://www.deliciasypunto.com'>
           <img src='/MarujitasLogos.png' className='logo' alt='marujitas logo' />
         </a>
-        <NavBar />
+        <NavBar history={props.history} />
       </div>
       <br />
     </div>
