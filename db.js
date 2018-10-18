@@ -1,5 +1,5 @@
 const pgp = require('pg-promise')();
-const db = pgp('postgres://localhost:5432/colombiafest_users')
+const db = pgp(process.env.DATABASE_URL)
 
 const getAllUsers = async () => {
   let users;

@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS colombiafest_users;
-CREATE DATABASE colombiafest_users;
+-- DROP DATABASE IF EXISTS colombiafest_users;
+-- CREATE DATABASE colombiafest_users;
 
-\c colombiafest_users;
+-- \c colombiafest_users;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
