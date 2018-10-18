@@ -9,25 +9,31 @@ class Raffle extends Component {
   state = {
     winner: null,
     secret: '',
+    waiting: false,
     msg: {}
   }
 
   selectRaffleWinner = () => {
-    const { secret } = this.state
-    this.setState({ buttonLoading: true })
+    const { secret } = this.state;
+
+    this.setState({
+      waiting: true
+    })
+
+    console.log('secret', secret);
 
     axios.post('/raffle', { secret })
       .then(({ data }) => {
         if (data.type === 'FORBIDDEN') {
           this.setState({
             msg: data,
-            buttonLoading: false,
+            waiting: false,
             secret: ''
           })
         } else {
           this.setState({
             winner: data,
-            buttonLoading: false,
+            waiting: false,
             msg: {}
           })
         }
@@ -62,6 +68,7 @@ class Raffle extends Component {
   }
 
   componentDidMount = () => {
+    this.fetchWinner();
     this.fetchNumberOfParticipants();
   }
 
@@ -72,13 +79,14 @@ class Raffle extends Component {
   }
 
   renderRaffleForm = () => {
-    const { secret, msg } = this.state;
+    const { secret, msg, waiting } = this.state;
     return (
       <RaffleForm
         handleSubmit={this.selectRaffleWinner}
         handleInput={this.handleInput}
         secret={secret}
         msg={msg}
+        waiting={waiting}
       />
     )
   }

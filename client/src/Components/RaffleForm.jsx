@@ -8,7 +8,6 @@ import {
 
 class RaffleForm extends Component {
   state = {
-    buttonLoading: false,
     buttonDisabled: true,
   }
 
@@ -26,11 +25,19 @@ class RaffleForm extends Component {
     this.props.handleInput(value)
   }
 
+  handleSubmit = (e) => {
+    this.props.handleSubmit(e);
+  }
+
   render() {
-    const { buttonLoading, buttonDisabled, } = this.state;
-    const { msg, secret } = this.props;
+    const {  buttonDisabled, } = this.state;
+    const { msg, secret, waiting } = this.props;
     return (
-      <Form onSubmit={this.props.handleSubmit} error={!msg.success}>
+      <Form
+        onSubmit={this.handleSubmit}
+        error={!msg.success}
+        loading={waiting}
+      >
         <Input
           fluid
           icon='key'
@@ -44,7 +51,6 @@ class RaffleForm extends Component {
           fluid
           positive
           disabled={buttonDisabled}
-          loading={buttonLoading}
           content='Pick a Winner'
         />
         <Message
