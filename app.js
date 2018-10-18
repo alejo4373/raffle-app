@@ -48,9 +48,7 @@ app.post('/raffle', (req, res, next) => {
     // Wait 3 seconds to build expectation
     setTimeout(async () => {
       try {
-        let users = await db.getAllUsers();
-        let i = Math.floor(Math.random() * users.length)
-        let winner = users[i];
+        let winner = await db.pickWinnerUser();
         res.json(winner);
       } catch (err) {
         next(err);
@@ -64,7 +62,15 @@ app.post('/raffle', (req, res, next) => {
       content: "You used an incorrect secret word."
     });
   }
+})
 
+app.get('/raffle/winner', async (req, res, next) => {
+  try {
+    let winner = await db.getWinnerUser();
+    res.json(winner);
+  } catch (err) {
+    next(err);
+  }
 })
 
 // Error handler
