@@ -37,3 +37,6 @@ body {
   padding: 1em 0;
 }
 
+video {
+  width: 100%
+}

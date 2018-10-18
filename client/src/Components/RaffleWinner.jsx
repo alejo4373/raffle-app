@@ -6,7 +6,10 @@ class RaffleWinner extends Component {
     const { winner } = this.props;
     return (
       <Card fluid>
-        <Image src='https://media2.giphy.com/media/ehhuGD0nByYxO/giphy.gif?cid=3640f6095bc7959a774435562eb3e276' />
+        <video src="/congrats.mp4" loop={true} autoPlay={true}>
+          Congrats!!!
+        </video>
+
         <Card.Content>
           <Card.Header>{winner.name + ' ' + winner.lastname}</Card.Header>
           <Card.Meta>
