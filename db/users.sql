@@ -9,7 +9,8 @@ CREATE TABLE users (
     lastname VARCHAR NOT NULL,
     email VARCHAR UNIQUE NOT NULL,
     phone VARCHAR NOT NULL,
-    registered_at VARCHAR
+    registered_at VARCHAR,
+    winner BOOLEAN DEFAULT FALSE
 );
 
 INSERT INTO users (name, lastname, email, phone, registered_at)

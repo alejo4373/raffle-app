@@ -41,6 +41,42 @@ const putUser = async (user) => {
   }
 }
 
+const pickWinnerUser = async () => {
+  try {
+    // See if a winner was already picked
+    let winner = await getWinnerUser();
+    if (!winner) {
+      const numberOfUsers = await getNumberOfUsers();
+      const max = numberOfUsers.count;
+      const min = 1;
+      // Get a random number between max and min inclusive
+      const randomUserId = Math.floor(Math.random() * (max - min + 1)) + min
+      try {
+        winner = await db.one(
+          `UPDATE users SET winner=TRUE WHERE id=$1
+            RETURNING *`, randomUserId)
+        return winner;
+      } catch (err) {
+        return Promise.reject(err)
+      }
+    } else {
+      return winner;
+    }
+
+  } catch (err) {
+    return Promise.reject(err)
+  }
+}
+
+const getWinnerUser = async () => {
+  try {
+    const [user] = await db.any('SELECT * from users WHERE winner=true')
+    return user;
+  } catch (err) {
+    return Promise.reject(err)
+  }
+}
+
 const getNumberOfUsers = async () => {
   try {
     const data = await db.one('SELECT COUNT(id) from users')
@@ -53,5 +89,7 @@ const getNumberOfUsers = async () => {
 module.exports = {
   getAllUsers,
   putUser,
-  getNumberOfUsers
+  pickWinnerUser,
+  getNumberOfUsers,
+  getWinnerUser
 }
