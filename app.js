@@ -10,7 +10,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Routes
 app.get('/users', async (req, res, next) => {
@@ -71,6 +71,10 @@ app.get('/raffle/winner', async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+})
+
+app.get('*', (req, res, next) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
 })
 
 // Error handler
