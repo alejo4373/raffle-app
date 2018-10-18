@@ -94,7 +94,7 @@ class FormComponent extends Component {
     const { name, lastname, phone, email, msg, formLoading } = this.state;
     return (
         <div className='form-container'>
-        <Header as='h2'>Register to participate</Header>
+        <Header as='h2'>Register to participate in the raffle:</Header>
           <Form
             loading={formLoading}
             success={msg.success}

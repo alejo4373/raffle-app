@@ -45,7 +45,7 @@ class Participants extends Component {
     const { participants } = this.state;
     return (
       <div>
-        <Header as='h2'>Participants: </Header>
+        <Header as='h2'>Participants: <span>{participants.length + ' total'}</span></Header>
         <div>
           <Input fluid icon='search' placeholder='Search..' onChange={this.handleInput} />
         </div>

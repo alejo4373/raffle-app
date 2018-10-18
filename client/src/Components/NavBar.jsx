@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { Menu, Icon } from 'semantic-ui-react';
 
 class NavBar extends Component {
@@ -11,7 +10,6 @@ class NavBar extends Component {
   }
 
   handleMenuItem = (e, { name }) => {
-    console.log('hanldemenuitem', name)
     const { history } = this.props
     history.push(name);
     this.setState({

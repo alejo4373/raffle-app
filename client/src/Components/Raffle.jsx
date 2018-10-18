@@ -10,7 +10,8 @@ class Raffle extends Component {
     winner: null,
     secret: '',
     waiting: false,
-    msg: {}
+    msg: {},
+    numberOfParticipants: 0
   }
 
   selectRaffleWinner = () => {
@@ -97,10 +98,10 @@ class Raffle extends Component {
   }
 
   render() {
-    const { winner } = this.state
+    const { winner, numberOfParticipants } = this.state
     return (
       <div>
-        <Header as='h2'>Raffle: </Header>
+        <Header as='h2'>Raffle: <span>{numberOfParticipants + ' participants'}</span></Header>
         <div className='raffle-container'>
           {
             winner ? this.renderRaffleWinner()
