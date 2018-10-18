@@ -1,5 +1,4 @@
 import React from 'react';
-import { Header } from 'semantic-ui-react';
 
 const BannerAndHeader = () => {
   return (
@@ -7,8 +6,10 @@ const BannerAndHeader = () => {
       <div>
         <img src='/banner.png' alt='nyc skyline' className='banner' />
       </div>
-      <Header as='h1'>Delicias y Punto - ColombiaFest 2018 </Header>
-      <br/>
+      <div className='logo-container'>
+        <img src='/MarujitasLogos.png' className='logo' alt='marujitas logo'/>
+      </div>
+      <br />
     </div>
   )
 }

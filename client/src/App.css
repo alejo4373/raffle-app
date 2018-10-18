@@ -37,6 +37,14 @@ body {
   padding: 1em 0;
 }
 
+.logo {
+  width: 14em;
+}
+
+.logo-container {
+  text-align: center;
+}
+
 video {
   width: 100%
 }
