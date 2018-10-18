@@ -13,7 +13,7 @@ const getAllUsers = async () => {
 
 const putUser = async (user) => {
   const newUser = {
-    registered_at: Date.now(),
+    registered_at: new Date().toISOString(),
     ...user
   }
   try {

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Card, Image, List, } from 'semantic-ui-react';
+import { Card, List, } from 'semantic-ui-react';
 
 class RaffleWinner extends Component {
   render() {
     const { winner } = this.props;
+    const dateObj = new Date(winner.registered_at);
+    const date = dateObj.toDateString();
+    const time = dateObj.toLocaleTimeString();
     return (
       <Card fluid>
         <video src="/congrats.mp4" loop={true} autoPlay={true}>
@@ -13,7 +16,7 @@ class RaffleWinner extends Component {
         <Card.Content>
           <Card.Header>{winner.name + ' ' + winner.lastname}</Card.Header>
           <Card.Meta>
-            <span className='date'>{`Registered in ${winner.registered_at}`}</span>
+            <span className='date'>{`Registered on ${date} at ${time}`}</span>
           </Card.Meta>
         </Card.Content>
         <Card.Content extra>

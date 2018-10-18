@@ -14,6 +14,6 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (name, lastname, email, phone, registered_at)
-VALUES('Alejandro', 'Franco', 'alejandrofranco@ac.c4q.nyc', '917-5736025','1539731307708'),
-      ('Kelvin', 'Rodriguez', 'kelvinrodriguez@ac.c4q.nyc', '917-5736025','1539731307708'),
-      ('Joyce', 'Ajagbe', 'joyceajagbe@ac.c4q.nyc', '917-5736025','1539731307708');
+VALUES('Alejandro', 'Franco', 'alejandrofranco@ac.c4q.nyc', '917-5736025','2018-10-18T02:37:57.828Z'),
+      ('Kelvin', 'Rodriguez', 'kelvinrodriguez@ac.c4q.nyc', '917-5736025','2018-10-18T02:37:57.828Z'),
+      ('Joyce', 'Ajagbe', 'joyceajagbe@ac.c4q.nyc', '917-5736025','2018-10-18T02:37:57.828Z');
