@@ -53,7 +53,7 @@ class Participants extends Component {
           participants.map((p, i) => (
             <List.Item key={p.name + i}>
               <Image circular className='user-avatar' src='/avatar.svg' />
-              <List.Content>
+              <List.Content style={{ padding: '2% 0' }}>
                 <List.Header as='h4'>{`${p.name} ${p.lastname}`}</List.Header>
                 <List.Description>
                   <List>

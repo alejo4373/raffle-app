@@ -24,6 +24,12 @@ body {
   } 
 }
 
+@media (min-width: 826px) {
+.ui.list {
+    font-size: 108%;
+} 
+}
+
 .ui.buttons {
   padding: 0 calc(50% - 121px);
 }
@@ -33,10 +39,14 @@ body {
 }
 
 .user-avatar {
-  width: 5em;
-  padding: 1em 0;
+  width: 16%;
 }
 
+@media (max-width: 768px) {
+  .user-avatar {
+    padding: 10% 0;
+  }
+}
 .logo {
   width: 14em;
 }
@@ -47,4 +57,12 @@ body {
 
 video {
   width: 100%
+}
+
+.ui.list > .item {
+  padding: 2% 0;
+}
+
+.ui.list > .item > .content {
+  padding: 2% 0;
 }
