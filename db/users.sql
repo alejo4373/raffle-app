@@ -13,7 +13,7 @@ CREATE TABLE users (
     winner BOOLEAN DEFAULT FALSE
 );
 
-INSERT INTO users (name, lastname, email, phone, registered_at)
+INSERT INTO users (name, lastname, phone, email, registered_at)
 VALUES ('Flss', 'Breitler', '+593 (597) 655-4479', 'fbreitler0@yale.edu', '2018-04-22T08:13:27Z'),
    ('Coreen', 'Blodget', '+375 (565) 810-6816', 'cblodget1@infoseek.co.jp', '2018-07-18T21:04:29Z'),
    ('Brodie', 'Libbis', '+66 (307) 946-8694', 'blibbis2@imgur.com', '2017-10-31T05:16:43Z'),
