@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Form, FormGroup, Message, Button } from 'semantic-ui-react';
+import { Form, FormGroup, Message, Button, Header } from 'semantic-ui-react';
 import ReactPhoneInput from 'react-phone-input-2';
 
 class FormComponent extends Component {
@@ -94,6 +94,7 @@ class FormComponent extends Component {
     const { name, lastname, phone, email, msg, formLoading } = this.state;
     return (
         <div className='form-container'>
+        <Header as='h2'>Register to participate</Header>
           <Form
             loading={formLoading}
             success={msg.success}
