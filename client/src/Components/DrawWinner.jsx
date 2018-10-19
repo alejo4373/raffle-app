@@ -5,7 +5,7 @@ import { Header } from 'semantic-ui-react';
 import RaffleForm from './RaffleForm';
 import RaffleWinner from './RaffleWinner';
 
-class Raffle extends Component {
+class DrawWinner extends Component {
   state = {
     winner: null,
     secret: '',
@@ -113,4 +113,4 @@ class Raffle extends Component {
   }
 }
 
-export default Raffle;
+export default DrawWinner;
