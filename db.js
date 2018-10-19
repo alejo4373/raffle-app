@@ -95,6 +95,15 @@ const getAllRaffles = async () => {
   }
 }
 
+const getRaffleById = async (id) => {
+  try {
+    const data = await db.one('SELECT * from raffles WHERE id = $1', id)
+    return data;
+  } catch (err) {
+    return Promise.reject(err)
+  }
+}
+
 module.exports = {
   getAllUsers,
   putUser,
@@ -102,4 +111,5 @@ module.exports = {
   getNumberOfUsers,
   getWinnerUser,
   getAllRaffles,
+  getRaffleById,
 }

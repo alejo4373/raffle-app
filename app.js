@@ -82,6 +82,17 @@ app.get('/raffles', async (req, res, next) => {
   }
 })
 
+app.get('/raffles/:id', async (req, res, next) => {
+  let { id } = req.params;
+  try {
+    let raffle = await db.getRaffleById(id);
+    res.json(raffle);
+  } catch (err) {
+    next(err);
+  }
+})
+
+
 // Error handler
 app.use(function (err, req, res, next) {
   if (req.app.get('env') === 'development') {
