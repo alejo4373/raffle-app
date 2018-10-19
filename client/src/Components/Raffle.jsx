@@ -31,15 +31,28 @@ class Raffle extends Component {
     this.fetchRaffle();
   }
 
+  renderParticipants = ({ match }) => {
+    const { raffleId } = match.params;
+    return (<Participants raffleId={raffleId} />)
+  }
+
+  renderDrawWinner = ({ match }) => {
+    const { raffleId } = match.params;
+    return (<DrawWinner raffleId={raffleId} />)
+  }
+  renderFormComponent = ({ match }) => {
+    const { raffleId } = match.params;
+    return (<FormComponent raffleId={raffleId} />)
+  }
   render() {
     const { raffle } = this.state
     return (
       <div>
         <NavBar history={this.props.history} raffle={raffle} />
         <Switch>
-          <Route path='/raffle/:raffleId/participants' component={Participants} />
-          <Route path='/raffle/:raffleId/draw' component={DrawWinner} />
-          <Route path='/raffle/' component={FormComponent} />
+          <Route path='/raffle/:raffleId/participants' render={this.renderParticipants} />
+          <Route path='/raffle/:raffleId/draw' render={this.renderDrawWinner} />
+          <Route path='/raffle/:raffleId' render={this.renderFormComponent} />
         </Switch>
       </div>
     );
