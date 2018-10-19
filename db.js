@@ -86,10 +86,20 @@ const getNumberOfUsers = async () => {
   }
 }
 
+const getAllRaffles = async () => {
+  try {
+    const data = await db.any('SELECT * from raffles')
+    return data;
+  } catch (err) {
+    return Promise.reject(err)
+  }
+}
+
 module.exports = {
   getAllUsers,
   putUser,
   pickWinnerUser,
   getNumberOfUsers,
-  getWinnerUser
+  getWinnerUser,
+  getAllRaffles,
 }

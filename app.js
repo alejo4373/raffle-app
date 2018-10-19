@@ -73,6 +73,15 @@ app.get('/raffle/winner', async (req, res, next) => {
   }
 })
 
+app.get('/raffles', async (req, res, next) => {
+  try {
+    let raffles = await db.getAllRaffles();
+    res.json(raffles);
+  } catch (err) {
+    next(err);
+  }
+})
+
 // Error handler
 app.use(function (err, req, res, next) {
   if (req.app.get('env') === 'development') {
