@@ -12,43 +12,66 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/raffles/all', async (req, res, next) => {
+  try {
+    let raffles = await db.getAllRaffles();
+    res.json(raffles);
+  } catch (err) {
+    next(err);
+  }
+})
+
+app.get('/raffles/:raffleId', async (req, res, next) => {
+  const { raffleId } = req.params;
+  try {
+    let raffle = await db.getRaffleById(raffleId);
+    res.json(raffle);
+  } catch (err) {
+    next(err);
+  }
+})
+
 // Routes
-app.get('/users', async (req, res, next) => {
+app.get('/raffles/:raffleId/participants', async (req, res, next) => {
+  const { raffleId } = req.params;
   let users;
   try {
-    users = await db.getAllUsers();
+    users = await db.getRaffleParticipants(raffleId);
     res.json(users);
   } catch (err) {
     next(err);
   }
 })
 
-app.get('/users/total', async (req, res, next) => {
+app.get('/raffles/:raffleId/total', async (req, res, next) => {
+  const { raffleId } = req.params;
   try {
-    const data = await db.getNumberOfUsers();
+    const data = await db.getTotalRaffleParticipants(raffleId);
     res.json(data);
   } catch (err) {
     next(err);
   }
 })
 
-app.post('/register', async (req, res, next) => {
+app.post('/raffles/:raffleId/register', async (req, res, next) => {
   const user = req.body;
+  const { raffleId } = req.params;
   try {
-    msg = await db.putUser(user);
+    msg = await db.registerParticipantForRaffle(user, raffleId);
     res.json(msg);
   } catch (err) {
     next(err);
   }
 })
 
-app.post('/raffle', (req, res, next) => {
-  let { secret } = req.body
+app.post('/raffles/:raffleId/draw', (req, res, next) => {
+  const { secret } = req.body
+  const { raffleId } = req.params
   if (secret === 'ColombiaFest 2018') {
     // Wait 3 seconds to build expectation
     setTimeout(async () => {
       try {
-        let winner = await db.pickWinnerUser();
+        let winner = await db.drawWinnerForRaffle(raffleId);
         res.json(winner);
       } catch (err) {
         next(err);
@@ -64,34 +87,15 @@ app.post('/raffle', (req, res, next) => {
   }
 })
 
-app.get('/raffle/winner', async (req, res, next) => {
+app.get('/raffles/:raffleId/winner', async (req, res, next) => {
+  const { raffleId } = req.params
   try {
-    let winner = await db.getWinnerUser();
+    let winner = await db.getRaffleWinner(raffleId);
     res.json(winner);
   } catch (err) {
     next(err);
   }
 })
-
-app.get('/raffles', async (req, res, next) => {
-  try {
-    let raffles = await db.getAllRaffles();
-    res.json(raffles);
-  } catch (err) {
-    next(err);
-  }
-})
-
-app.get('/raffles/:id', async (req, res, next) => {
-  let { id } = req.params;
-  try {
-    let raffle = await db.getRaffleById(id);
-    res.json(raffle);
-  } catch (err) {
-    next(err);
-  }
-})
-
 
 // Error handler
 app.use(function (err, req, res, next) {
