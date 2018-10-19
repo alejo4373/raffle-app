@@ -14,16 +14,15 @@ class DrawWinner extends Component {
     numberOfParticipants: 0
   }
 
-  selectRaffleWinner = () => {
+  drawRaffleWinner = () => {
     const { secret } = this.state;
+    const { raffleId } = this.props;
 
     this.setState({
       waiting: true
     })
 
-    console.log('secret', secret);
-
-    axios.post('/raffle', { secret })
+    axios.post(`/raffles/${raffleId}/draw`, { secret })
       .then(({ data }) => {
         if (data.type === 'FORBIDDEN') {
           this.setState({
@@ -45,7 +44,8 @@ class DrawWinner extends Component {
   }
 
   fetchNumberOfParticipants = () => {
-    axios.get('/users/total')
+    const { raffleId } = this.props;
+    axios.get(`/raffles/${raffleId}/total`)
       .then(({ data }) => {
         this.setState({
           numberOfParticipants: data.count,
@@ -57,7 +57,8 @@ class DrawWinner extends Component {
   }
 
   fetchWinner = () => {
-    axios.get('/raffle/winner')
+    const { raffleId } = this.props;
+    axios.get(`/raffles/${raffleId}/winner`)
       .then(({ data }) => {
         this.setState({
           winner: data,
@@ -83,7 +84,7 @@ class DrawWinner extends Component {
     const { secret, msg, waiting } = this.state;
     return (
       <RaffleForm
-        handleSubmit={this.selectRaffleWinner}
+        handleSubmit={this.drawRaffleWinner}
         handleInput={this.handleInput}
         secret={secret}
         msg={msg}

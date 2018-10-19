@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   fetchRaffles = () => {
-    axios.get('/raffles')
+    axios.get('/raffles/all')
       .then(({ data }) => {
         this.setState({
           raffles: data
