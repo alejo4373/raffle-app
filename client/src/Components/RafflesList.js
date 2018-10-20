@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Header } from 'semantic-ui-react';
+import { Header, Button, Form } from 'semantic-ui-react';
 
 // Child Components
 import RaffleCard from './RaffleCard';
 
-const RafflesList = ({ raffles }) => {
+const RafflesList = ({ raffles, handleNewRaffleName, raffleName, handleNewRaffleButton }) => {
   return (
     <div>
       <Header as='h2'>Raffles: </Header>
@@ -14,6 +14,11 @@ const RafflesList = ({ raffles }) => {
             return (<RaffleCard raffle={r} />)
           })
         }
+        <br />
+        <Form fluid >
+          <Form.Input type='text' content={raffleName} onChange={handleNewRaffleName} required />
+          <Button fluid onClick={handleNewRaffleButton} >New Raffle</Button>
+        </Form>
       </div>
     </div>
   );
