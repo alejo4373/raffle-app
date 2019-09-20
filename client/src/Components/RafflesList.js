@@ -7,7 +7,7 @@ const RafflesList = ({ raffles }) => {
   return (
     <div>{
       raffles.map(r => {
-        return (<RaffleCard raffle={r} />)
+        return (<RaffleCard key={r.id} raffle={r} />)
       })
     }</div>
   );

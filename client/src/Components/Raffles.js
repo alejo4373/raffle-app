@@ -54,8 +54,7 @@ class Raffles extends Component {
       <div className='raffles'>
         <Header as='h2'>Raffles: </Header>
         <RafflesList raffles={raffles} />
-        <br/>
-        <Form fluid onSubmit={this.handleNewRaffleSubmit}>
+        <Form onSubmit={this.handleNewRaffleSubmit}>
           <Form.Input
             type='text'
             content={newRaffleName}
