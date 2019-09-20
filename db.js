@@ -41,30 +41,43 @@ const registerParticipantForRaffle = async (user, raffleId) => {
   }
 }
 
+const getRandomUserFromRaffle = async (raffleId) => {
+  try {
+    const user = await db.one(`
+      SELECT * FROM users WHERE raffle_id = $1
+      OFFSET floor(random() * (
+        SELECT COUNT(*) FROM users WHERE raffle_id = $1)
+      ) LIMIT 1;
+    `, raffleId)
+    return user
+  } catch (err) {
+    return Promise.reject(err)
+  }
+}
+
 const drawWinnerForRaffle = async (raffleId) => {
   console.log('drawing winner, raffleId:', raffleId)
   try {
     // See if a winner was already picked
     let winner = await getRaffleWinner(raffleId);
     if (!winner) {
-      const numberOfUsers = await getTotalRaffleParticipants(raffleId);
-      const max = numberOfUsers.count;
-      const min = 1;
-      // Get a random number between max and min inclusive
-      const randomUserId = Math.floor(Math.random() * (max - min + 1)) + min
-      try {
-        const data = await db.one(
-          `UPDATE raffles SET winner_id = $1 
-            WHERE id = $2 
-            RETURNING *`, [randomUserId, raffleId])
-        winner = await getParticipantById(randomUserId);
-        return winner;
-      } catch (err) {
-        return Promise.reject(err)
+      winner = await getRandomUserFromRaffle(raffleId);
+      let raffle = {
+        id: raffleId,
+        winner_id: winner.id,
+        raffled_at_timestamp: new Date().toISOString()
       }
-    } else {
-      return winner;
+
+      await db.one(`
+        UPDATE raffles 
+          SET 
+            winner_id = $/winner_id/, 
+            raffled_at_timestamp = $/raffled_at_timestamp/ 
+          WHERE id = $/id/ 
+        RETURNING *`, raffle
+      )
     }
+    return winner;
 
   } catch (err) {
     return Promise.reject(err)
@@ -78,6 +91,9 @@ const getRaffleWinner = async (raffleId) => {
     const winner = await db.one('SELECT * FROM users WHERE id = $1', raffle.winner_id);
     return winner;
   } catch (err) {
+    if (err.message === "No data returned from the query.") {
+      return false
+    }
     return Promise.reject(err)
   }
 }

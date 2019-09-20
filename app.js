@@ -77,7 +77,7 @@ app.post('/raffles/:raffleId/register', async (req, res, next) => {
 app.post('/raffles/:raffleId/draw', (req, res, next) => {
   const { secret } = req.body
   const { raffleId } = req.params
-  if (secret === 'ColombiaFest 2018') {
+  if (secret === 'Marujitas 2019') {
     // Wait 3 seconds to build expectation
     setTimeout(async () => {
       try {
