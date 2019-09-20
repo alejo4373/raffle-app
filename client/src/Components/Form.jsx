@@ -33,7 +33,8 @@ class FormComponent extends Component {
   }
 
   registerUser = (user) => {
-    axios.post('/register', user)
+    const { raffleId } = this.props;
+    axios.post(`/raffles/${raffleId}/register`, user)
       .then(({ data }) => {
         let newState = {
           msg: data,

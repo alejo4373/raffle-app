@@ -19,20 +19,30 @@ class NavBar extends Component {
 
   render() {
     const { activeItem } = this.state;
+    const { raffle } = this.props;
     return (
-      <div>
+      <div style={{ textAlign: 'center' }}>
         <Menu compact icon='labeled'>
-          <Menu.Item name='/' active={activeItem === '/'} onClick={this.handleMenuItem}>
+          <Menu.Item
+            name={`/raffle/${raffle.id}`}
+            active={activeItem === `/raffle/${raffle.id}`}
+            onClick={this.handleMenuItem}>
             <Icon name='signup' />
             Register
         </Menu.Item>
 
-          <Menu.Item name='/participants' active={activeItem === '/participants'} onClick={this.handleMenuItem}>
+          <Menu.Item
+            name={`/raffle/${raffle.id}/participants`}
+            active={activeItem === `/raffle/${raffle.id}/participants`}
+            onClick={this.handleMenuItem}>
             <Icon name='group' />
             Participants
         </Menu.Item>
 
-          <Menu.Item name='/raffle' active={activeItem === '/raffle'} onClick={this.handleMenuItem}>
+          <Menu.Item
+            name={`/raffle/${raffle.id}/draw`}
+            active={activeItem === `/raffle/${raffle.id}/draw`}
+            onClick={this.handleMenuItem}>
             <Icon name='ticket' />
             Raffle
           </Menu.Item>

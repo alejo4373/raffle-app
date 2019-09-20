@@ -1,24 +1,29 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import { Segment, Image } from 'semantic-ui-react';
+import { Segment } from 'semantic-ui-react';
+import { Switch, Route } from 'react-router-dom';
 import './App.css';
 
 // Child Components
 import BannerAndHeader from './Components/BannerAndHeader';
-import FormComponent from './Components/Form';
-import Participants from './Components/Participants';
+import Raffles from './Components/Raffles';
 import Raffle from './Components/Raffle';
 
 class App extends Component {
+
+  renderRaffle = (routeProps) => {
+    const { history } = this.props;
+    const { raffleId } = routeProps.match.params;
+    return (<Raffle history={history} raffleId={raffleId} />)
+  }
+
   render() {
     return (
       <div className='App'>
         <Segment>
-          <BannerAndHeader history={this.props.history} />
+          <BannerAndHeader />
           <Switch>
-            <Route path='/participants' component={Participants} />
-            <Route path='/raffle' component={Raffle} />
-            <Route path='/' component={FormComponent} />
+            <Route path='/raffle/:raffleId' render={this.renderRaffle} />
+            <Route path='/' component={Raffles} />
           </Switch>
           <br />
           <Image fluid src='/footer.jpg' alt='tamales' />

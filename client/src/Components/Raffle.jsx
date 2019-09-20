@@ -1,115 +1,61 @@
 import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
-import { Header } from 'semantic-ui-react';
 
-import RaffleForm from './RaffleForm';
-import RaffleWinner from './RaffleWinner';
+// Child Components
+import NavBar from './NavBar';
+import FormComponent from './Form';
+import Participants from './Participants';
+import DrawWinner from './DrawWinner';
 
 class Raffle extends Component {
-  state = {
-    winner: null,
-    secret: '',
-    waiting: false,
-    msg: {},
-    numberOfParticipants: 0
+  constructor(props) {
+    super(props);
+    this.state = {
+      raffle: {}
+    }
   }
 
-  selectRaffleWinner = () => {
-    const { secret } = this.state;
-
-    this.setState({
-      waiting: true
-    })
-
-    console.log('secret', secret);
-
-    axios.post('/raffle', { secret })
+  fetchRaffle = () => {
+    const { raffleId } = this.props
+    axios.get('/raffles/' + raffleId)
       .then(({ data }) => {
-        if (data.type === 'FORBIDDEN') {
-          this.setState({
-            msg: data,
-            waiting: false,
-            secret: ''
-          })
-        } else {
-          this.setState({
-            winner: data,
-            waiting: false,
-            msg: {}
-          })
-        }
+        this.setState({ raffle: data })
       })
       .catch(err => {
-        console.log('Error picking winner', err);
+        console.log('Error fetching raffle', err);
       })
   }
 
-  fetchNumberOfParticipants = () => {
-    axios.get('/users/total')
-      .then(({ data }) => {
-        this.setState({
-          numberOfParticipants: data.count,
-        })
-      })
-      .catch(err => {
-        console.log('Error fetching # of participants', err);
-      })
+  componentDidMount() {
+    this.fetchRaffle();
   }
 
-  fetchWinner = () => {
-    axios.get('/raffle/winner')
-      .then(({ data }) => {
-        this.setState({
-          winner: data,
-        })
-      })
-      .catch(err => {
-        console.log('Error fetching winner', err);
-      })
+  renderParticipants = ({ match }) => {
+    const { raffleId } = match.params;
+    return (<Participants raffleId={raffleId} />)
   }
 
-  componentDidMount = () => {
-    this.fetchWinner();
-    this.fetchNumberOfParticipants();
+  renderDrawWinner = ({ match }) => {
+    const { raffleId } = match.params;
+    return (<DrawWinner raffleId={raffleId} />)
   }
-
-  handleInput = (value) => {
-    this.setState({
-      secret: value,
-    })
+  renderFormComponent = ({ match }) => {
+    const { raffleId } = match.params;
+    return (<FormComponent raffleId={raffleId} />)
   }
-
-  renderRaffleForm = () => {
-    const { secret, msg, waiting } = this.state;
-    return (
-      <RaffleForm
-        handleSubmit={this.selectRaffleWinner}
-        handleInput={this.handleInput}
-        secret={secret}
-        msg={msg}
-        waiting={waiting}
-      />
-    )
-  }
-
-  renderRaffleWinner = () => {
-    const { winner } = this.state;
-    return (<RaffleWinner winner={winner} />)
-  }
-
   render() {
-    const { winner, numberOfParticipants } = this.state
+    const { raffle } = this.state
     return (
       <div>
-        <Header as='h2'>Raffle: <span>{numberOfParticipants + ' participants'}</span></Header>
-        <div className='raffle-container'>
-          {
-            winner ? this.renderRaffleWinner()
-              : this.renderRaffleForm()
-          }
-        </div>
+        <NavBar history={this.props.history} raffle={raffle} />
+        <Switch>
+          <Route path='/raffle/:raffleId/participants' render={this.renderParticipants} />
+          <Route path='/raffle/:raffleId/draw' render={this.renderDrawWinner} />
+          <Route path='/raffle/:raffleId' render={this.renderFormComponent} />
+        </Switch>
       </div>
-    )
+    );
   }
 }
 
