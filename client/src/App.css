@@ -66,3 +66,7 @@ video {
 .ui.list > .item > .content {
   padding: 2% 0;
 }
+
+.ui.fluid.card {
+  margin-bottom: 20px
+}
