@@ -53,6 +53,16 @@ app.get('/raffles/:raffleId/total', async (req, res, next) => {
   }
 })
 
+app.post('/raffles/', async (req, res, next) => {
+  const { name } = req.body;
+  try {
+    const msg = await db.createNewRaffle(name);
+    res.json(msg);
+  } catch (err) {
+    next(err);
+  }
+})
+
 app.post('/raffles/:raffleId/register', async (req, res, next) => {
   const user = req.body;
   const { raffleId } = req.params;

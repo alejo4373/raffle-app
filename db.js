@@ -119,6 +119,29 @@ const getParticipantById = async (id) => {
   }
 }
 
+const createNewRaffle = async (raffleName) => {
+  const raffle = {
+    name: raffleName,
+    created_at_timestamp: new Date().toISOString(),
+  }
+  
+  try {
+    let newRaffle = await db.one(
+      `INSERT INTO raffles(name, created_at_timestamp)
+        VALUES($/name/, $/created_at_timestamp/) RETURNING *;`,
+      raffle
+    )
+    return {
+      type: 'SUCCESS',
+      success: true,
+      title: 'Successful new raffle created!',
+      content: newRaffle
+    };
+  } catch (err) {
+    return Promise.reject(err)
+  }
+}
+
 module.exports = {
   getAllRaffles,
   getRaffleById,
@@ -126,5 +149,6 @@ module.exports = {
   getTotalRaffleParticipants,
   registerParticipantForRaffle,
   drawWinnerForRaffle,
-  getRaffleWinner
+  getRaffleWinner,
+  createNewRaffle
 }
