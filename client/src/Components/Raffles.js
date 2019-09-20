@@ -36,10 +36,8 @@ class Raffles extends Component {
 
   handleNewRaffleSubmit = async (e) => {
     e.preventDefault();
-    // Send new raffle
     try {
       const { data } = await axios.post('/raffles', { name: this.state.newRaffleName })
-      console.log('newRaffle', data)
       this.setState(prevState => {
         return {
           raffles: [...prevState.raffles, data.content]
@@ -52,7 +50,6 @@ class Raffles extends Component {
 
   render() {
     const { raffles, newRaffleName } = this.state
-    console.log(this.state)
     return (
       <div className='raffles'>
         <Header as='h2'>Raffles: </Header>
