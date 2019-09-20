@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Image } from 'semantic-ui-react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 
@@ -25,6 +25,8 @@ class App extends Component {
             <Route path='/raffle/:raffleId' render={this.renderRaffle} />
             <Route path='/' component={Raffles} />
           </Switch>
+          <br />
+          <Image fluid src='/footer.jpg' alt='tamales' />
         </Segment>
       </div>
     );
