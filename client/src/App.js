@@ -1,39 +1,14 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { Segment } from 'semantic-ui-react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 
 // Child Components
 import BannerAndHeader from './Components/BannerAndHeader';
-import RafflesList from './Components/RafflesList';
+import Raffles from './Components/Raffles';
 import Raffle from './Components/Raffle';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      raffles: []
-    }
-  }
-
-  fetchRaffles = () => {
-    axios.get('/raffles/all')
-      .then(({ data }) => {
-        this.setState({
-          raffles: data
-        })
-      })
-  }
-
-  componentDidMount() {
-    this.fetchRaffles();
-  }
-
-  renderRafflesList = () => {
-    const { raffles } = this.state;
-    return (<RafflesList raffles={raffles} />)
-  }
 
   renderRaffle = (routeProps) => {
     const { history } = this.props;
@@ -48,7 +23,7 @@ class App extends Component {
           <BannerAndHeader />
           <Switch>
             <Route path='/raffle/:raffleId' render={this.renderRaffle} />
-            <Route path='/' render={this.renderRafflesList} />
+            <Route path='/' component={Raffles} />
           </Switch>
         </Segment>
       </div>
