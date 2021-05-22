@@ -47,8 +47,8 @@ class NavBar extends Component {
         </Menu.Item>
 
           <Menu.Item
-            name={`/raffle/${raffle.id}/draw`}
-            active={activeItem === `/raffle/${raffle.id}/draw`}
+            name={`/raffle/${raffle.id}/winner`}
+            active={activeItem === `/raffle/${raffle.id}/winner`}
             onClick={this.handleMenuItem}>
             <Icon name='trophy' />
             Pick Winner

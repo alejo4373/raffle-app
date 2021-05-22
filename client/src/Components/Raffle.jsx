@@ -53,7 +53,7 @@ class Raffle extends Component {
         <NavBar history={this.props.history} raffle={raffle} />
         <Switch>
           <Route path='/raffle/:raffleId/participants' render={this.renderParticipants} />
-          <Route path='/raffle/:raffleId/draw' render={this.renderDrawWinner} />
+          <Route path='/raffle/:raffleId/winner' render={this.renderDrawWinner} />
           <Route path='/raffle/:raffleId' render={this.renderFormComponent} />
         </Switch>
       </div>
