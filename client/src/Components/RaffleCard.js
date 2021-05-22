@@ -3,8 +3,8 @@ import { List, Card } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 const RaffleCard = ({ raffle }) => {
-  const createdAtDate = new Date(raffle.created_at_timestamp);
-  const raffledAtDate = new Date(raffle.raffle_at_timestamp);
+  const createdAtDate = new Date(raffle.created_at);
+  const raffledAtDate = new Date(raffle.raffle_at);
 
   const createdAt = {
     date: createdAtDate.toDateString(),

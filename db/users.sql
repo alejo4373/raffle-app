@@ -13,8 +13,9 @@ DROP TABLE IF EXISTS raffles CASCADE;
 CREATE TABLE raffles (
   id SERIAL PRIMARY KEY,
   name VARCHAR NOT NULL,
-  created_at_timestamp VARCHAR NOT NULL,
-  raffled_at_timestamp VARCHAR DEFAULT NULL,
+  secret_token VARCHAR NOT NULL,
+  created_at VARCHAR NOT NULL,
+  raffled_at VARCHAR DEFAULT NULL,
   winner_id INT DEFAULT NULL
 );
 

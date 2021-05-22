@@ -10,7 +10,8 @@ class Raffles extends Component {
     super(props);
     this.state = {
       raffles: [],
-      newRaffleName: ''
+      newRaffleName: '',
+      newRaffleToken: ''
     }
   }
 
@@ -27,17 +28,20 @@ class Raffles extends Component {
     this.fetchRaffles();
   }
 
-  handleNewRaffleName = (e) => {
-    let { value } = e.target
+  handleInput = (e) => {
+    let { value, name } = e.target
     this.setState({
-      newRaffleName: value
+      [name]: value
     })
   }
 
   handleNewRaffleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post('/api/raffles', { name: this.state.newRaffleName })
+      const { data } = await axios.post('/api/raffles', {
+        name: this.state.newRaffleName,
+        secret_token: this.state.newRaffleToken
+      })
       this.setState(prevState => {
         return {
           raffles: [...prevState.raffles, data.content],
@@ -50,7 +54,7 @@ class Raffles extends Component {
   }
 
   render() {
-    const { raffles, newRaffleName } = this.state
+    const { raffles, newRaffleName, newRaffleToken } = this.state
     return (
       <div className='raffles'>
         <Header as='h2'>New Raffle: </Header>
@@ -59,10 +63,21 @@ class Raffles extends Component {
             label='Raffle Name:'
             type='text'
             content={newRaffleName}
-            onChange={this.handleNewRaffleName}
+            name="newRaffleName"
+            onChange={this.handleInput}
             value={newRaffleName}
             required
           />
+          <Form.Input
+            label='Raffle Secret Token'
+            type='text'
+            content={newRaffleToken}
+            name="newRaffleToken"
+            onChange={this.handleInput}
+            value={newRaffleToken}
+            required
+          />
+          <p>You must remember the Raffle Token because it will be asked when picking a winner</p>
           <Button primary fluid >Create New Raffle</Button>
         </Form>
         <Header as='h2'>All Raffles: </Header>

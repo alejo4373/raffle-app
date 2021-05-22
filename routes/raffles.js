@@ -42,9 +42,9 @@ raffles.get('/:raffleId/total', async (req, res, next) => {
 })
 
 raffles.post('/', async (req, res, next) => {
-  const { name } = req.body;
+  const { name, secret_token } = req.body;
   try {
-    const msg = await db.createNewRaffle(name);
+    const msg = await db.createNewRaffle(name, secret_token);
     res.json(msg);
   } catch (err) {
     next(err);
@@ -65,7 +65,8 @@ raffles.post('/:raffleId/participants', async (req, res, next) => {
 raffles.put('/:raffleId/winner', async (req, res, next) => {
   const { token } = req.body
   const { raffleId } = req.params
-  if (token === 's3CrE7') {
+  const { secret_token } = await db.getRaffleById(raffleId)
+  if (token === secret_token) {
     try {
       let winner = await db.drawWinnerForRaffle(raffleId);
       res.json(winner);

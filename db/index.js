@@ -56,23 +56,21 @@ const getRandomUserFromRaffle = async (raffleId) => {
 }
 
 const drawWinnerForRaffle = async (raffleId) => {
-  console.log('drawing winner, raffleId:', raffleId)
   try {
-    // See if a winner was already picked
     let winner = await getRaffleWinner(raffleId);
     if (!winner) {
       winner = await getRandomUserFromRaffle(raffleId);
       let raffle = {
         id: raffleId,
         winner_id: winner.id,
-        raffled_at_timestamp: new Date().toISOString()
+        raffled_at: new Date().toISOString()
       }
 
       await db.one(`
         UPDATE raffles 
           SET 
             winner_id = $/winner_id/, 
-            raffled_at_timestamp = $/raffled_at_timestamp/ 
+            raffled_at = $/raffled_at/
           WHERE id = $/id/ 
         RETURNING *`, raffle
       )
@@ -85,7 +83,6 @@ const drawWinnerForRaffle = async (raffleId) => {
 }
 
 const getRaffleWinner = async (raffleId) => {
-  console.log('getting raffle winner for:', raffleId);
   try {
     const raffle = await getRaffleById(raffleId);
     const winner = await db.one('SELECT * FROM users WHERE id = $1', raffle.winner_id);
@@ -109,7 +106,7 @@ const getTotalRaffleParticipants = async (raffleId) => {
 
 const getAllRaffles = async () => {
   try {
-    const data = await db.any('SELECT * from raffles')
+    const data = await db.any('SELECT id, name, created_at, raffled_at, winner_id from raffles')
     return data;
   } catch (err) {
     return Promise.reject(err)
@@ -135,16 +132,17 @@ const getParticipantById = async (id) => {
   }
 }
 
-const createNewRaffle = async (raffleName) => {
+const createNewRaffle = async (name, token) => {
   const raffle = {
-    name: raffleName,
-    created_at_timestamp: new Date().toISOString(),
+    name,
+    token,
+    created_at: new Date().toISOString(),
   }
 
   try {
     let newRaffle = await db.one(
-      `INSERT INTO raffles(name, created_at_timestamp)
-        VALUES($/name/, $/created_at_timestamp/) RETURNING *;`,
+      `INSERT INTO raffles(name, secret_token, created_at)
+        VALUES($/name/, $/token/, $/created_at/) RETURNING *;`,
       raffle
     )
     return {

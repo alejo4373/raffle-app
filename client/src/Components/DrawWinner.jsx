@@ -8,27 +8,27 @@ import RaffleWinner from './RaffleWinner';
 class DrawWinner extends Component {
   state = {
     winner: null,
-    secret: '',
+    token: '',
     waiting: false,
     msg: {},
     numberOfParticipants: 0
   }
 
   drawRaffleWinner = () => {
-    const { secret } = this.state;
+    const { token } = this.state;
     const { raffleId } = this.props;
 
     this.setState({
       waiting: true
     })
 
-    axios.post(`/api/raffles/${raffleId}/draw`, { secret })
+    axios.put(`/api/raffles/${raffleId}/winner`, { token })
       .then(({ data }) => {
         if (data.type === 'FORBIDDEN') {
           this.setState({
             msg: data,
             waiting: false,
-            secret: ''
+            token: ''
           })
         } else {
           this.setState({
@@ -76,17 +76,17 @@ class DrawWinner extends Component {
 
   handleInput = (value) => {
     this.setState({
-      secret: value,
+      token: value,
     })
   }
 
   renderRaffleForm = () => {
-    const { secret, msg, waiting } = this.state;
+    const { token, msg, waiting } = this.state;
     return (
       <RaffleForm
         handleSubmit={this.drawRaffleWinner}
         handleInput={this.handleInput}
-        secret={secret}
+        token={token}
         msg={msg}
         waiting={waiting}
       />

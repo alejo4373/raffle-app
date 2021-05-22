@@ -30,8 +30,8 @@ class RaffleForm extends Component {
   }
 
   render() {
-    const {  buttonDisabled, } = this.state;
-    const { msg, secret, waiting } = this.props;
+    const { buttonDisabled, } = this.state;
+    const { msg, token, waiting } = this.props;
     return (
       <Form
         onSubmit={this.handleSubmit}
@@ -42,9 +42,9 @@ class RaffleForm extends Component {
           fluid
           icon='key'
           iconPosition='left'
-          placeholder='Secret word'
+          placeholder='Secret token'
           onChange={this.handleInput}
-          value={secret}
+          value={token}
         />
         <br />
         <Button
