@@ -25,7 +25,7 @@ class Participants extends Component {
   filterParticipants = (pattern) => {
     this.setState(prevState => {
       const filteredParticipants = prevState.allParticipants.filter(p => {
-        const fullName = p.name + ' ' + p.lastname;
+        const fullName = p.firstname + ' ' + p.lastname;
         return fullName.toLowerCase().includes(pattern.toLowerCase())
       })
 
@@ -55,7 +55,7 @@ class Participants extends Component {
             <List.Item key={p.name + i}>
               <Image circular className='user-avatar' src='/avatar.svg' />
               <List.Content style={{ padding: '2% 0' }}>
-                <List.Header as='h4'>{`${p.name} ${p.lastname}`}</List.Header>
+                <List.Header as='h4'>{`${p.firstname} ${p.lastname}`}</List.Header>
                 <List.Description>
                   <List>
                     <List.Item icon='hashtag' content={p.id} />
@@ -66,9 +66,7 @@ class Participants extends Component {
               </List.Content>
             </List.Item>
           ))
-
         }</List>
-
       </div>
     )
   }

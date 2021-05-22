@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Header } from 'semantic-ui-react';
+import { Header, Message } from 'semantic-ui-react';
 
 import RaffleForm from './RaffleForm';
 import RaffleWinner from './RaffleWinner';
@@ -99,16 +99,15 @@ class DrawWinner extends Component {
   }
 
   render() {
-    const { winner, numberOfParticipants } = this.state
+    const { winner } = this.state
     return (
       <div>
-        <Header as='h2'>Raffle: <span>{numberOfParticipants + ' participants'}</span></Header>
-        <div className='raffle-container'>
-          {
-            winner ? this.renderRaffleWinner()
-              : this.renderRaffleForm()
-          }
-        </div>
+        <Header as='h2'>Pick a Winner</Header>
+        <Message warning content="To pick a winner for this raffle you must know the secret token" />
+        {
+          winner ? this.renderRaffleWinner()
+            : this.renderRaffleForm()
+        }
       </div>
     )
   }

@@ -6,22 +6,14 @@ body {
   padding: 0 15%;
 }
 
-@media (max-width: 416px) {
-  .App {
-    padding: 0 10%;
+@media (max-width: 500px) {
+  .ui.menu {
+    font-size: 0.8em;
   }
 
-  .raffle-container {
-      margin: 0;
-      width: 100%;
-    }
-} 
-
-@media (min-width: 415px) {
- .raffle-container {
-    margin: 0 auto;
-    width: 60%;
-  } 
+  .App {
+    padding: 0 5%;
+  }
 }
 
 @media (min-width: 826px) {

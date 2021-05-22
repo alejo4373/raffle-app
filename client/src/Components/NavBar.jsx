@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Icon } from 'semantic-ui-react';
+import { Menu, Icon, Segment } from 'semantic-ui-react';
 
 class NavBar extends Component {
   constructor(props) {
@@ -21,8 +21,8 @@ class NavBar extends Component {
     const { activeItem } = this.state;
     const { raffle } = this.props;
     return (
-      <div style={{ textAlign: 'center' }}>
-        <Menu compact icon='labeled'>
+      <Segment basic>
+        <Menu fluid widths={4} icon='labeled'>
           <Menu.Item
             name="/raffles"
             onClick={this.handleMenuItem}>
@@ -54,7 +54,7 @@ class NavBar extends Component {
             Pick Winner
           </Menu.Item>
         </Menu>
-      </div>
+      </Segment>
     )
   }
 }

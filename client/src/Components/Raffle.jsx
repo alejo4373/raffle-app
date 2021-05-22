@@ -7,6 +7,7 @@ import NavBar from './NavBar';
 import FormComponent from './Form';
 import Participants from './Participants';
 import DrawWinner from './DrawWinner';
+import { Header } from 'semantic-ui-react';
 
 class Raffle extends Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class Raffle extends Component {
     const { raffle } = this.state
     return (
       <div>
+        <Header as="h2" textAlign="center">{raffle.name}</Header>
         <NavBar history={this.props.history} raffle={raffle} />
         <Switch>
           <Route path='/raffle/:raffleId/participants' render={this.renderParticipants} />

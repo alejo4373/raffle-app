@@ -89,7 +89,7 @@ raffles.get('/:raffleId/winner', async (req, res, next) => {
     if (winner) {
       res.json(winner);
     } else {
-      res.json({
+      res.status(404).json({
         message: "No winner for this raffle has been picked or the raffle doesn't exist"
       })
     }

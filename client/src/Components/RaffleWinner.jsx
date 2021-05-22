@@ -9,9 +9,9 @@ class RaffleWinner extends Component {
     const time = dateObj.toLocaleTimeString();
     return (
       <Card fluid>
-        <Image src="/_blah.png" alt='yahoo'/>
+        <Image src="/_blah.png" alt='yahoo' />
         <Card.Content>
-          <Card.Header>{winner.name + ' ' + winner.lastname}</Card.Header>
+          <Card.Header>{winner.firstname + ' ' + winner.lastname}</Card.Header>
           <Card.Meta>
             <span className='date'>{`Registered on ${date} at ${time}`}</span>
           </Card.Meta>
