@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "start:dev": "nodemon ./bin/www",
+    "start:dev": "NODE_ENV=development nodemon ./bin/www",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "dependencies": {
@@ -16,6 +16,7 @@
     "pg-promise": "^10.10.2"
   },
   "devDependencies": {
+    "dotenv": "^10.0.0",
     "nodemon": "^2.0.7"
   }
 }

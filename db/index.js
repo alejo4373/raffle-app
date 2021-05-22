@@ -18,8 +18,8 @@ const registerParticipantForRaffle = async (user, raffleId) => {
   }
   try {
     await db.none(
-      `INSERT INTO users(raffle_id, name, lastname, email, phone, registered_at)
-        VALUES($/raffle_id/, $/name/, $/lastname/, $/email/, $/phone/, $/registered_at/);`,
+      `INSERT INTO users(raffle_id, firstname, lastname, email, ${newUser.phone ? "phone, " : ""} registered_at)
+        VALUES($/raffle_id/, $/firstname/, $/lastname/, $/email/, ${newUser.phone ? "$/phone/, " : ""} $/registered_at/);`,
       newUser
     )
     return {
@@ -140,7 +140,7 @@ const createNewRaffle = async (raffleName) => {
     name: raffleName,
     created_at_timestamp: new Date().toISOString(),
   }
-  
+
   try {
     let newRaffle = await db.one(
       `INSERT INTO raffles(name, created_at_timestamp)
