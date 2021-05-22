@@ -23,11 +23,9 @@ app.get('*', (req, res, next) => {
 
 // Error handler
 app.use(function (err, req, res, next) {
-  if (req.app.get('env') === 'development') {
-    console.log('[Error]:\n', err);
-  }
+  console.log('[Error]:\n', err);
   res.status(500);
-  res.send('Error')
+  res.send({ message: "An unknown error ocurred" })
 
 });
 

@@ -6,6 +6,10 @@ body {
   padding: 0 15%;
 }
 
+.ui.card:hover {
+  box-shadow: 0 2px 8px #bbb;
+}
+
 @media (max-width: 500px) {
   .ui.menu {
     font-size: 0.8em;

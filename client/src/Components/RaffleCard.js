@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Card, Icon } from 'semantic-ui-react';
+import { Card, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 const RaffleCard = ({ raffle }) => {
@@ -22,7 +22,7 @@ const RaffleCard = ({ raffle }) => {
   }
 
   return (
-    <Link to={`/raffle/${raffle.id}`} >
+    <Link className="card-link" to={`/raffle/${raffle.id}`} >
       <Card fluid>
         <Card.Content>
           <Card.Header>{raffle.name}</Card.Header>
