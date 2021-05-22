@@ -1,10 +1,10 @@
 import React from 'react';
-import { List, Card } from 'semantic-ui-react';
+import { List, Card, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 const RaffleCard = ({ raffle }) => {
   const createdAtDate = new Date(raffle.created_at);
-  const raffledAtDate = new Date(raffle.raffle_at);
+  const raffledAtDate = new Date(raffle.raffled_at);
 
   const createdAt = {
     date: createdAtDate.toDateString(),
@@ -16,8 +16,8 @@ const RaffleCard = ({ raffle }) => {
     time: raffledAtDate.toLocaleTimeString()
   }
 
-  let raffledAt_formated = `Raffled on ${raffledAt.date} at ${raffledAt.time}`
-  if (raffledAtDate.toString() === 'Invalid Date') {
+  let raffledAt_formated = `Raffled on: ${raffledAt.date} at ${raffledAt.time}`
+  if (!raffle.raffled_at) {
     raffledAt_formated = 'Not raffled yet'
   }
 
@@ -26,15 +26,18 @@ const RaffleCard = ({ raffle }) => {
       <Card fluid>
         <Card.Content>
           <Card.Header>{raffle.name}</Card.Header>
-          <Card.Meta>
-            <span className='date'>{`Registered on ${createdAt.date} at ${createdAt.time}`}</span>
-          </Card.Meta>
-        </Card.Content>
-        <Card.Content extra>
-          <List>
-            <List.Item icon='winner' content={raffle.winner_id} />
-            <List.Item icon='calendar check outline' content={raffledAt_formated} />
-          </List>
+          <Card.Description>
+            <p>
+              <Icon name="calendar plus outline" /> {`Created on: ${createdAt.date} at ${createdAt.time}`}
+            </p>
+            <p>
+              <Icon name='winner' />{`Winner Id: ${raffle.winner_id ? raffle.winner_id : "No one yet"}`}
+            </p>
+            <p>
+              <Icon name='calendar check outline' /> {raffledAt_formated}
+            </p>
+          </Card.Description>
+
         </Card.Content>
       </Card>
     </Link>
