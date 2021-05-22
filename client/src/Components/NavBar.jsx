@@ -24,6 +24,13 @@ class NavBar extends Component {
       <div style={{ textAlign: 'center' }}>
         <Menu compact icon='labeled'>
           <Menu.Item
+            name="/raffles"
+            onClick={this.handleMenuItem}>
+            <Icon name='ticket' />
+            All Raffles
+         </Menu.Item>
+
+          <Menu.Item
             name={`/raffle/${raffle.id}`}
             active={activeItem === `/raffle/${raffle.id}`}
             onClick={this.handleMenuItem}>
@@ -43,8 +50,8 @@ class NavBar extends Component {
             name={`/raffle/${raffle.id}/draw`}
             active={activeItem === `/raffle/${raffle.id}/draw`}
             onClick={this.handleMenuItem}>
-            <Icon name='ticket' />
-            Raffle
+            <Icon name='trophy' />
+            Pick Winner
           </Menu.Item>
         </Menu>
       </div>

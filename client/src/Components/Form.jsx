@@ -5,7 +5,7 @@ import ReactPhoneInput from 'react-phone-input-2';
 
 class FormComponent extends Component {
   state = {
-    name: '',
+    firstname: '',
     lastname: '',
     phone: '',
     email: '',
@@ -34,7 +34,7 @@ class FormComponent extends Component {
 
   registerUser = (user) => {
     const { raffleId } = this.props;
-    axios.post(`/api/raffles/${raffleId}/register`, user)
+    axios.post(`/api/raffles/${raffleId}/participants`, user)
       .then(({ data }) => {
         let newState = {
           msg: data,
@@ -92,7 +92,7 @@ class FormComponent extends Component {
   }
 
   render() {
-    const { name, lastname, phone, email, msg, formLoading } = this.state;
+    const { firstname, lastname, phone, email, msg, formLoading } = this.state;
     return (
       <div className='form-container'>
         <Header as='h2'>Register to participate in the raffle:</Header>
@@ -107,9 +107,9 @@ class FormComponent extends Component {
               fluid
               label='First Name'
               type='text'
-              name='name'
+              name='firstname'
               required={true}
-              value={name}
+              value={firstname}
               placeholder='First Name'
               onChange={this.handleInputChange}
             />
@@ -140,6 +140,7 @@ class FormComponent extends Component {
               regions={['america']}
               placeholder='Phone'
               value={phone}
+              specialLabel=""
               inputStyle={{
                 paddingLeft: '3em'
               }}

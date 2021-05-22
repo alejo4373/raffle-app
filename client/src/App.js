@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Segment, Image } from 'semantic-ui-react';
+import { Segment, Header } from 'semantic-ui-react';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 
-// Child Components
-import BannerAndHeader from './Components/BannerAndHeader';
 import Raffles from './Components/Raffles';
 import Raffle from './Components/Raffle';
 
@@ -20,13 +18,11 @@ class App extends Component {
     return (
       <div className='App'>
         <Segment>
-          <BannerAndHeader />
+          <Header as="h1" textAlign="center">Raffle App</Header>
           <Switch>
             <Route path='/raffle/:raffleId' render={this.renderRaffle} />
             <Route path='/' component={Raffles} />
           </Switch>
-          <br />
-          <Image fluid src='/footer.jpg' alt='tamales' />
         </Segment>
       </div>
     );

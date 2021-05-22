@@ -40,7 +40,8 @@ class Raffles extends Component {
       const { data } = await axios.post('/api/raffles', { name: this.state.newRaffleName })
       this.setState(prevState => {
         return {
-          raffles: [...prevState.raffles, data.content]
+          raffles: [...prevState.raffles, data.content],
+          newRaffleName: ''
         }
       })
     } catch (err) {
@@ -52,17 +53,21 @@ class Raffles extends Component {
     const { raffles, newRaffleName } = this.state
     return (
       <div className='raffles'>
-        <Header as='h2'>Raffles: </Header>
-        <RafflesList raffles={raffles} />
+        <Header as='h2'>New Raffle: </Header>
         <Form onSubmit={this.handleNewRaffleSubmit}>
           <Form.Input
+            label='Raffle Name:'
             type='text'
             content={newRaffleName}
             onChange={this.handleNewRaffleName}
+            value={newRaffleName}
             required
           />
-          <Button fluid >New Raffle</Button>
+          <Button primary fluid >Create New Raffle</Button>
         </Form>
+        <Header as='h2'>All Raffles: </Header>
+        <RafflesList raffles={raffles} />
+
       </div>
     );
   }
