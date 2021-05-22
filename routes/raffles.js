@@ -74,11 +74,8 @@ raffles.put('/:raffleId/winner', async (req, res, next) => {
       next(err);
     }
   } else {
-    res.json({
-      type: 'FORBIDDEN',
-      success: false,
-      title: 'Form Error',
-      content: "You have a missing or incorrect secret token."
+    res.status(403).json({
+      message: "You have a missing or incorrect secret token."
     });
   }
 })

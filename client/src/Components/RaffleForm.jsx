@@ -3,7 +3,8 @@ import {
   Input,
   Button,
   Form,
-  Message
+  Message,
+  Header
 } from 'semantic-ui-react';
 
 class RaffleForm extends Component {
@@ -32,33 +33,39 @@ class RaffleForm extends Component {
   render() {
     const { buttonDisabled, } = this.state;
     const { msg, token, waiting } = this.props;
+
     return (
-      <Form
-        onSubmit={this.handleSubmit}
-        error={!msg.success}
-        loading={waiting}
-      >
-        <Input
-          fluid
-          icon='key'
-          iconPosition='left'
-          placeholder='Secret token'
-          onChange={this.handleInput}
-          value={token}
-        />
-        <br />
-        <Button
-          fluid
-          positive
-          disabled={buttonDisabled}
-          content='Pick a Winner'
-        />
-        <Message
-          error={!msg.success}
-          header={msg.title}
-          content={msg.content}
-        />
-      </Form >
+      <div>
+        <Header as='h2'>Pick a Winner</Header>
+        <Form
+          onSubmit={this.handleSubmit}
+          error={msg.error}
+          warning={msg.warning}
+          loading={waiting}
+        >
+          <Input
+            fluid
+            icon='key'
+            iconPosition='left'
+            placeholder='Secret token'
+            onChange={this.handleInput}
+            value={token}
+          />
+          <br />
+          <Button
+            fluid
+            positive
+            disabled={buttonDisabled}
+            content='Pick a Winner'
+          />
+          <Message
+            header={msg.title}
+            error={msg.error}
+            warning={msg.warning}
+            content={msg.content}
+          />
+        </Form >
+      </div>
     )
   }
 }

@@ -52,7 +52,7 @@ class Participants extends Component {
         </div>
         <List divided>{
           participants.map((p, i) => (
-            <List.Item key={p.name + i}>
+            <List.Item key={p.firstname + i}>
               <Image circular className='user-avatar' src='/avatar.svg' />
               <List.Content style={{ padding: '2% 0' }}>
                 <List.Header as='h4'>{`${p.firstname} ${p.lastname}`}</List.Header>

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Header, Message } from 'semantic-ui-react';
-
 import RaffleForm from './RaffleForm';
 import RaffleWinner from './RaffleWinner';
 
@@ -10,7 +8,11 @@ class DrawWinner extends Component {
     winner: null,
     token: '',
     waiting: false,
-    msg: {},
+    msg: {
+      warning: true,
+      title: "Secret Token",
+      content: "The secret token used when creating the raffle must be provided."
+    },
     numberOfParticipants: 0
   }
 
@@ -24,21 +26,33 @@ class DrawWinner extends Component {
 
     axios.put(`/api/raffles/${raffleId}/winner`, { token })
       .then(({ data }) => {
-        if (data.type === 'FORBIDDEN') {
-          this.setState({
-            msg: data,
-            waiting: false,
-            token: ''
-          })
-        } else {
-          this.setState({
-            winner: data,
-            waiting: false,
-            msg: {}
-          })
-        }
+        this.setState({
+          winner: data,
+          waiting: false,
+          msg: {}
+        })
       })
       .catch(err => {
+        if (err.response) {
+          if (err.response.status === 403) {
+            return this.setState({
+              msg: {
+                error: true,
+                title: "Wrong Secret Token",
+                content: err.response.data.message
+              },
+              waiting: false
+            })
+          }
+        }
+        this.setState({
+          msg: {
+            error: true,
+            title: "Unknown Error",
+            content: "Something went wrong. Try to reload the page and try again."
+          },
+          waiting: false
+        })
         console.log('Error picking winner', err);
       })
   }
@@ -102,8 +116,7 @@ class DrawWinner extends Component {
     const { winner } = this.state
     return (
       <div>
-        <Header as='h2'>Pick a Winner</Header>
-        <Message warning content="To pick a winner for this raffle you must know the secret token" />
+
         {
           winner ? this.renderRaffleWinner()
             : this.renderRaffleForm()
