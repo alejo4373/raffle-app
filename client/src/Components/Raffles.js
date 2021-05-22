@@ -15,7 +15,7 @@ class Raffles extends Component {
   }
 
   fetchRaffles = () => {
-    axios.get('/raffles/all')
+    axios.get('/api/raffles')
       .then(({ data }) => {
         this.setState({
           raffles: data
@@ -37,7 +37,7 @@ class Raffles extends Component {
   handleNewRaffleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post('/raffles', { name: this.state.newRaffleName })
+      const { data } = await axios.post('/api/raffles', { name: this.state.newRaffleName })
       this.setState(prevState => {
         return {
           raffles: [...prevState.raffles, data.content]

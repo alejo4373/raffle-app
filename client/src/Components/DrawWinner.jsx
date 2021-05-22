@@ -22,7 +22,7 @@ class DrawWinner extends Component {
       waiting: true
     })
 
-    axios.post(`/raffles/${raffleId}/draw`, { secret })
+    axios.post(`/api/raffles/${raffleId}/draw`, { secret })
       .then(({ data }) => {
         if (data.type === 'FORBIDDEN') {
           this.setState({
@@ -45,7 +45,7 @@ class DrawWinner extends Component {
 
   fetchNumberOfParticipants = () => {
     const { raffleId } = this.props;
-    axios.get(`/raffles/${raffleId}/total`)
+    axios.get(`/api/raffles/${raffleId}/total`)
       .then(({ data }) => {
         this.setState({
           numberOfParticipants: data.count,
@@ -58,7 +58,7 @@ class DrawWinner extends Component {
 
   fetchWinner = () => {
     const { raffleId } = this.props;
-    axios.get(`/raffles/${raffleId}/winner`)
+    axios.get(`/api/raffles/${raffleId}/winner`)
       .then(({ data }) => {
         this.setState({
           winner: data,

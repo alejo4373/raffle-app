@@ -34,7 +34,7 @@ class FormComponent extends Component {
 
   registerUser = (user) => {
     const { raffleId } = this.props;
-    axios.post(`/raffles/${raffleId}/register`, user)
+    axios.post(`/api/raffles/${raffleId}/register`, user)
       .then(({ data }) => {
         let newState = {
           msg: data,
@@ -94,71 +94,71 @@ class FormComponent extends Component {
   render() {
     const { name, lastname, phone, email, msg, formLoading } = this.state;
     return (
-        <div className='form-container'>
+      <div className='form-container'>
         <Header as='h2'>Register to participate in the raffle:</Header>
-          <Form
-            loading={formLoading}
-            success={msg.success}
-            error={!msg.success}
-            onSubmit={this.handleSubmit}
-          >
-            <FormGroup widths='equal'>
-              <Form.Input
-                fluid
-                label='First Name'
-                type='text'
-                name='name'
-                required={true}
-                value={name}
-                placeholder='First Name'
-                onChange={this.handleInputChange}
-              />
-              <Form.Input
-                fluid
-                label='Last Name'
-                type='text'
-                required={true}
-                name='lastname'
-                value={lastname}
-                placeholder='Last Name'
-                onChange={this.handleInputChange}
-              />
-            </FormGroup>
+        <Form
+          loading={formLoading}
+          success={msg.success}
+          error={!msg.success}
+          onSubmit={this.handleSubmit}
+        >
+          <FormGroup widths='equal'>
             <Form.Input
-              label='Email'
-              type='email'
-              name='email'
+              fluid
+              label='First Name'
+              type='text'
+              name='name'
               required={true}
-              value={email}
-              placeholder='jhondoe@example.com'
+              value={name}
+              placeholder='First Name'
               onChange={this.handleInputChange}
             />
-            <Form.Field>
-              <label>Phone</label>
-              <ReactPhoneInput
-                defaultCountry='us'
-                regions={['america']}
-                placeholder='Phone'
-                value={phone}
-                inputStyle={{
-                  paddingLeft: '3em'
-                }}
-                onChange={this.handlePhoneInput}
-              />
-            </Form.Field>
-            <Message
-              success={msg.success}
-              error={!msg.success}
-              header={msg.title}
-              content={msg.content}
+            <Form.Input
+              fluid
+              label='Last Name'
+              type='text'
+              required={true}
+              name='lastname'
+              value={lastname}
+              placeholder='Last Name'
+              onChange={this.handleInputChange}
             />
-            <br />
-            <Button.Group fluid>
-              <Button content='Submit' primary />
-              <Button content='Reset' onClick={this.resetForm} secondary />
-            </Button.Group>
-          </Form>
-        </div>
+          </FormGroup>
+          <Form.Input
+            label='Email'
+            type='email'
+            name='email'
+            required={true}
+            value={email}
+            placeholder='jhondoe@example.com'
+            onChange={this.handleInputChange}
+          />
+          <Form.Field>
+            <label>Phone</label>
+            <ReactPhoneInput
+              defaultCountry='us'
+              regions={['america']}
+              placeholder='Phone'
+              value={phone}
+              inputStyle={{
+                paddingLeft: '3em'
+              }}
+              onChange={this.handlePhoneInput}
+            />
+          </Form.Field>
+          <Message
+            success={msg.success}
+            error={!msg.success}
+            header={msg.title}
+            content={msg.content}
+          />
+          <br />
+          <Button.Group fluid>
+            <Button content='Submit' primary />
+            <Button content='Reset' onClick={this.resetForm} secondary />
+          </Button.Group>
+        </Form>
+      </div>
     );
   }
 }

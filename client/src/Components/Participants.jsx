@@ -10,7 +10,7 @@ class Participants extends Component {
 
   fetchParticipants = () => {
     const { raffleId } = this.props
-    axios.get(`/raffles/${raffleId}/participants`)
+    axios.get(`/api/raffles/${raffleId}/participants`)
       .then(({ data }) => {
         this.setState({
           allParticipants: data,

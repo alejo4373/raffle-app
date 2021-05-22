@@ -18,7 +18,7 @@ class Raffle extends Component {
 
   fetchRaffle = () => {
     const { raffleId } = this.props
-    axios.get('/raffles/' + raffleId)
+    axios.get('/api/raffles/' + raffleId)
       .then(({ data }) => {
         this.setState({ raffle: data })
       })
