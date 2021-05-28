@@ -63,7 +63,7 @@ raffles.post('/:raffleId/participants', async (req, res, next) => {
 })
 
 raffles.put('/:raffleId/winner', async (req, res, next) => {
-  const { token } = req.body
+  const token = req.body.secret_token
   const { raffleId } = req.params
   const { secret_token } = await db.getRaffleById(raffleId)
   if (token === secret_token) {
