@@ -8,7 +8,8 @@ if (process.env.NODE_ENV === "development") {
 }
 
 const app = express();
-const rafflesRouter = require('./routes/raffles')
+const rafflesRouter = require('./routes/raffles');
+const { checkOrCreateUserTables } = require('./middleware/checkOrCreateUserTables');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -16,7 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use('/api/raffles', rafflesRouter)
+app.use('/api/:username/raffles', checkOrCreateUserTables, rafflesRouter)
 app.get('*', (req, res, next) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'));
 })

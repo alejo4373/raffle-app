@@ -1,9 +1,10 @@
 const raffles = require('express').Router()
-const db = require('../db')
+const Raffles = require('../db/raffles');
 
 raffles.get('/', async (req, res, next) => {
+  let tableName = req.locals.tableNames.raffles
   try {
-    let raffles = await db.getAllRaffles();
+    let raffles = await Raffles.getAllRaffles(tableName);
     res.json(raffles);
   } catch (err) {
     next(err);
@@ -11,9 +12,10 @@ raffles.get('/', async (req, res, next) => {
 })
 
 raffles.get('/:raffleId', async (req, res, next) => {
+  let tableName = req.locals.tableNames.raffles
   const { raffleId } = req.params;
   try {
-    let raffle = await db.getRaffleById(raffleId);
+    let raffle = await Raffles.getRaffleById(raffleId, tableName);
     res.json(raffle);
   } catch (err) {
     next(err);
@@ -24,7 +26,7 @@ raffles.get('/:raffleId/participants', async (req, res, next) => {
   const { raffleId } = req.params;
   let users;
   try {
-    users = await db.getRaffleParticipants(raffleId);
+    users = await Raffles.getRaffleParticipants(raffleId);
     res.json(users);
   } catch (err) {
     next(err);
@@ -34,7 +36,7 @@ raffles.get('/:raffleId/participants', async (req, res, next) => {
 raffles.get('/:raffleId/total', async (req, res, next) => {
   const { raffleId } = req.params;
   try {
-    const data = await db.getTotalRaffleParticipants(raffleId);
+    const data = await Raffles.getTotalRaffleParticipants(raffleId);
     res.json(data);
   } catch (err) {
     next(err);
@@ -43,8 +45,10 @@ raffles.get('/:raffleId/total', async (req, res, next) => {
 
 raffles.post('/', async (req, res, next) => {
   const { name, secret_token } = req.body;
+  console.log(req.locals)
+  let tableName = req.locals.tableNames.raffles
   try {
-    const msg = await db.createNewRaffle(name, secret_token);
+    const msg = await Raffles.createNewRaffle(name, secret_token, tableName);
     res.json(msg);
   } catch (err) {
     next(err);
@@ -55,7 +59,7 @@ raffles.post('/:raffleId/participants', async (req, res, next) => {
   const user = req.body;
   const { raffleId } = req.params;
   try {
-    msg = await db.registerParticipantForRaffle(user, raffleId);
+    msg = await Raffles.registerParticipantForRaffle(user, raffleId);
     res.json(msg);
   } catch (err) {
     next(err);
@@ -65,10 +69,10 @@ raffles.post('/:raffleId/participants', async (req, res, next) => {
 raffles.put('/:raffleId/winner', async (req, res, next) => {
   const { token } = req.body
   const { raffleId } = req.params
-  const { secret_token } = await db.getRaffleById(raffleId)
+  const { secret_token } = await Raffles.getRaffleById(raffleId)
   if (token === secret_token) {
     try {
-      let winner = await db.drawWinnerForRaffle(raffleId);
+      let winner = await Raffles.drawWinnerForRaffle(raffleId);
       res.json(winner);
     } catch (err) {
       next(err);
@@ -83,7 +87,7 @@ raffles.put('/:raffleId/winner', async (req, res, next) => {
 raffles.get('/:raffleId/winner', async (req, res, next) => {
   const { raffleId } = req.params
   try {
-    let winner = await db.getRaffleWinner(raffleId);
+    let winner = await Raffles.getRaffleWinner(raffleId);
     if (winner) {
       res.json(winner);
     } else {
@@ -95,5 +99,6 @@ raffles.get('/:raffleId/winner', async (req, res, next) => {
     next(err);
   }
 })
+
 
 module.exports = raffles;
